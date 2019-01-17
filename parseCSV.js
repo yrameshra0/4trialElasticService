@@ -7,7 +7,7 @@ const client = new elasticSearch.Client({
 
 async function init() {
     const result = await client.ping({ requestTimeout: 1000 });
-    const creditsString = fs.readFileSync('./tmdb_5000_credits.csv').toString('ascii');
+    const creditsString = fs.readFileSync('./smallers.csv').toString('ascii');
     const creditsArray = creditsString.split('\n');
     const firstRow = creditsArray.slice(0, 1).reduce((acc, val) => {
         return val.split(',');
