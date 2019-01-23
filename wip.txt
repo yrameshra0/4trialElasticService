@@ -1,0 +1,6 @@
+✔ Creating a poniter for saving the configuration of the source
+✔ Pointer should be storing progress of source reading and sink writing
+✔ Create file stream should be uploading data to data buffer 
+✔ Upload to data buffer should also transform the data
+✔ Sink updater would pink the transformed data and upload it to the conifured sink.
+✘ Work over the micro batching of the flattened credits part
