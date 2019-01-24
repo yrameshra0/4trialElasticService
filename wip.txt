@@ -3,4 +3,6 @@
 ✔ Create file stream should be uploading data to data buffer 
 ✔ Upload to data buffer should also transform the data
 ✔ Sink updater would pink the transformed data and upload it to the conifured sink.
-✘ Work over the micro batching of the flattened credits part
+✔ Micro batching is now more fine tuneable and only deals with sink uploading
+✘ Proper mapping to be enabled for movies information for elastic indexing
+✘ Adding sorting and filter capabilities to the elastic search queiries
