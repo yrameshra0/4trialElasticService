@@ -1,0 +1,8 @@
+✔ Creating a poniter for saving the configuration of the source
+✔ Pointer should be storing progress of source reading and sink writing
+✔ Create file stream should be uploading data to data buffer 
+✔ Upload to data buffer should also transform the data
+✔ Sink updater would pink the transformed data and upload it to the conifured sink.
+✔ Micro batching is now more fine tuneable and only deals with sink uploading
+✘ Proper mapping to be enabled for movies information for elastic indexing
+✘ Adding sorting and filter capabilities to the elastic search queiries

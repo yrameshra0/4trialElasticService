@@ -1,28 +1,16 @@
 {
+    "extends": "airbnb-base",
     "env": {
-        "es6": true,
+        "jest": true,
         "node": true
     },
-    "extends": "eslint:recommended",
-    "parserOptions": {
-        "ecmaVersion": 2016
-    },
+    "plugins": [],
     "rules": {
-        "indent": [
+        "max-len": [
             "error",
-            4
-        ],
-        "linebreak-style": [
-            "error",
-            "unix"
-        ],
-        "quotes": [
-            "error",
-            "single"
-        ],
-        "semi": [
-            "error",
-            "always"
+            {
+                "code": 180
+            }
         ]
     }
 }
