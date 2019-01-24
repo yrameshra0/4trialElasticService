@@ -8,221 +8,184 @@ const client = new elasticSearch.Client({
 });
 
 /* eslint-disable camelcase */
-function flattenCredits(batchToUpload) {
+function flattenCredits(movieInfo) {
   const bulkArray = [];
-  batchToUpload.forEach((movieInfo) => {
-    console.log(`Saving CAST Movie ${movieInfo.movie_id}`);
-    movieInfo.cast.forEach((castMember) => {
-      const { movie_id, title } = movieInfo;
-      const {
-        cast_id, character, name, gender,
-      } = castMember;
 
-      bulkArray.push({
-        index: {
-          _index: 'movies', _type: 'cast', _id: `movie_id-${movie_id}--cast_id-${cast_id}`,
-        },
-      });
-      bulkArray.push({
-        movie_id,
-        title,
-        cast_id,
-        character,
-        name,
-        gender,
-      });
-    });
-  });
-
-  return bulkArray;
-}
-
-
-function flattenMovies(batchToUpload) {
-  const bulkArray = [];
-  batchToUpload.forEach((movieInfo) => {
-    console.log(`Saving Movie ${movieInfo.id}`);
-    const { title, id, original_language } = movieInfo;
+  //   console.log(`Saving CAST Movie ${movieInfo.movie_id}`);
+  movieInfo.cast.forEach((castMember) => {
+    const { movie_id, title } = movieInfo;
+    const {
+      cast_id, character, name, gender,
+    } = castMember;
 
     bulkArray.push({
       index: {
-        _index: 'movies', _type: 'movie', _id: `movie_id-${id}`,
+        _index: 'movies', _type: 'cast', _id: `movie_id-${movie_id}--cast_id-${cast_id}`,
       },
     });
     bulkArray.push({
-      id,
+      movie_id,
       title,
-      original_language,
+      cast_id,
+      character,
+      name,
+      gender,
     });
   });
 
   return bulkArray;
 }
 
-function pointerConfig(fileName, flattenFunc) {
-  return {
-    data: {
-      buffer: [],
-      readComplete: false,
-      uploadComplete: false,
+
+function flattenMovies(movieInfo) {
+  const bulkArray = [];
+  //   console.log(`Saving Movie ${movieInfo.id}`);
+  const { title, id, original_language } = movieInfo;
+
+  bulkArray.push({
+    index: {
+      _index: 'movies', _type: 'movie', _id: `movie_id-${id}`,
     },
-    source: {
-      csvFile: fileName,
-      csvHeader: [],
-      lineBuffer: '',
-    },
-    sink: {
-      batchSize: 5,
-      interval: 100,
-      onGoing: false,
-      maxRetries: 3,
-      errorRetries: 0,
-      flattenFunc,
-    },
-  };
+  });
+  bulkArray.push({
+    id,
+    title,
+    original_language,
+  });
+
+  return bulkArray;
 }
 
 const configPointer = {
-  credits: pointerConfig('tmdb_5000_credits.csv', flattenCredits),
-  movies: pointerConfig('smaller.csv', flattenMovies),
+  credits: {
+    csvFile: 'tmdb_5000_credits.csv',
+    csvHeader: [],
+    lineBuffer: '',
+    flattenFunc: flattenCredits,
+  },
+  movies: {
+    csvFile: 'tmdb_5000_movies.csv',
+    csvHeader: [],
+    lineBuffer: '',
+    flattenFunc: flattenMovies,
+  },
+  sink: {
+    uploadBuffer: [],
+    emptyUploadTries: 0,
+    batchSize: 100,
+    interval: 100,
+    onGoing: false,
+    maxRetries: 3,
+    errorRetries: 0,
+  },
 };
 
 function parseFileStream(pointerKey) {
   const pointer = configPointer[pointerKey];
-  const { source, data } = pointer;
-  const stream = fs.createReadStream(source.csvFile, { flags: 'r', encoding: 'utf-8' });
+
+  const stream = fs.createReadStream(pointer.csvFile, { flags: 'r', encoding: 'utf-8' });
   return new Promise((resolve, reject) => {
     function processLine(line) {
-      if (line.length > 0) {
-        if (source.csvHeader.length === 0) { // header
-          source.csvHeader = line.split(',');
-        } else {
-          const dataRow = line.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/);
-          const firstRow = source.csvHeader;
-          const json = {};
-          dataRow.forEach((val, index) => {
-            try {
-              const replacer = val.replace(/""/g, '"').replace(/^"(.+(?="$))"$/g, '$1');
-              json[firstRow[index]] = JSON.parse(replacer);
-            } catch (err) {
-              json[firstRow[index]] = val;
-            }
-          });
-          data.buffer.push(json);
-        }
+      const { uploadBuffer } = configPointer.sink;
+      if (line.length <= 0) return;
+      if (pointer.csvHeader.length === 0) { // header
+        pointer.csvHeader = line.split(',');
+        return;
       }
+      const dataRow = line.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/);
+      const firstRow = pointer.csvHeader;
+      const json = {};
+      dataRow.forEach((val, index) => {
+        try {
+          const replacer = val.replace(/""/g, '"').replace(/^"(.+(?="$))"$/g, '$1');
+          json[firstRow[index]] = JSON.parse(replacer);
+        } catch (err) {
+          json[firstRow[index]] = val;
+        }
+      });
+
+      uploadBuffer.push(...pointer.flattenFunc(json));
     }
 
     function pump() {
-      const eolPosition = () => source.lineBuffer.indexOf('\n');
+      const eolPosition = () => pointer.lineBuffer.indexOf('\n');
       while (eolPosition() >= 0) {
-        processLine(source.lineBuffer.slice(0, eolPosition()));
-        source.lineBuffer = source.lineBuffer.slice(eolPosition() + 1);
+        processLine(pointer.lineBuffer.slice(0, eolPosition()));
+        pointer.lineBuffer = pointer.lineBuffer.slice(eolPosition() + 1);
       }
     }
 
-
     stream.on('data', (dataOnStream) => {
-      source.lineBuffer += dataOnStream.toString();
+      pointer.lineBuffer += dataOnStream.toString();
       pump();
     });
 
     stream.on('close', () => {
-      data.readComplete = true;
       resolve();
     });
 
     stream.on('error', () => {
-      data.readComplete = true;
       reject();
     });
   });
 }
 
-async function uploadExpandedItemsInBatches(dataForUpload) {
-  return new Promise(async (resolve, reject) => {
-    const totalBulkToProcess = dataForUpload.length;
-    const batchSize = 6;
-    let currentlyAt = 0;
-    while (currentlyAt <= (totalBulkToProcess - batchSize)) {
-      const batch = dataForUpload.slice(currentlyAt, (currentlyAt + batchSize));
-      try {
-        await client.bulk({ body: batch });
-      } catch (err) {
-        console.error(`Failed processing batch ${err}`);
-        reject(err);
-      }
-      currentlyAt += batch.length;
-    }
-    resolve();
-  });
-}
-
-function uploadData(pointerKey) {
-  const pointer = configPointer[pointerKey];
-  const { data, sink } = pointer;
+function uploadData() {
+  const { interval, batchSize, maxRetries } = configPointer.sink;
+  let {
+    emptyUploadTries,
+    onGoing,
+    uploadBuffer,
+    errorRetries,
+  } = configPointer.sink;
   return new Promise((resolve, reject) => {
-    let interval;
+    let scheduledInterval;
 
     async function uploadToSink() {
       // Stopping the upload and resolving the promise
-      if (data.uploadComplete) {
-        clearInterval(interval);
+      if (emptyUploadTries >= interval) {
+        clearInterval(scheduledInterval);
         resolve();
         return;
       }
 
       // Backing off, already processing chunk
-      if (sink.onGoing) return;
+      if (onGoing) return;
 
-      const batchToUpload = data.buffer.splice(0, sink.batchSize);
-
+      // multiplier 2 because each upload element has additional meta info item
+      const currentBatchSize = batchSize * 2;
+      const batchToUpload = uploadBuffer.splice(0, currentBatchSize);
+      console.log(`Current Upload Buffer Size -- ${uploadBuffer.length}`);
       // No data for upload we can safely resolve the promise
-      if (batchToUpload.length === 0 && data.readComplete === true) {
-        data.uploadComplete = true;
-      } else if (batchToUpload.length !== 0) {
-        const dataForUpload = sink.flattenFunc(batchToUpload);
-        try {
-          sink.onGoing = true;
-          await uploadExpandedItemsInBatches(dataForUpload);
-          // Recovered from error switching back counters
-          if (sink.errorRetries !== 0) { sink.errorRetries = 0; }
-        } catch (err) {
-          // Exhausted maximum retries downstream not recovered
-          if (sink.errorRetries > sink.maxRetries) {
-            reject(err);
-            return;
-          }
+      if (batchToUpload.length === 0) {
+        emptyUploadTries += 1;
+        // console.log(`Backing off ${emptyUploadTries}`);
+        return;
+      }
 
-          console.error(`Failed processing batch ${err}`);
-          // Moving the chunk back of buffer for retry
-          data.buffer.concat(dataForUpload);
-        } finally {
-          sink.onGoing = false;
+      try {
+        onGoing = true;
+        await client.bulk({ body: batchToUpload });
+        // Recovered from error switching back counters
+        if (errorRetries !== 0) { errorRetries = 0; }
+      } catch (err) {
+        // Exhausted maximum retries downstream not recovered
+        if (errorRetries > maxRetries) {
+          reject(err);
+          return;
         }
+
+        console.error(`Failed processing batch ${err}`);
+        // Moving the chunk back of buffer for retry
+        uploadBuffer = uploadBuffer.concat(batchToUpload);
+        errorRetries += 1;
+      } finally {
+        onGoing = false;
       }
     }
 
-    interval = setInterval(uploadToSink, sink.interval);
+    scheduledInterval = setInterval(uploadToSink, interval);
   });
-}
-
-async function init() {
-  const result = await client.ping({ requestTimeout: 1000 });
-  // const jsonObjects = parseFile('tmdb_5000_credits');
-  const awaiter = [];
-  awaiter.push(parseFileStream('movies'));
-  awaiter.push(uploadData('movies'));
-  // await resetIndex();
-  // findAll(awaiter);
-  // printAllNames(jsonObjects);
-  // search(awaiter, "Taylor");
-  // savingDocuments(awaiter, jsonObjects);
-  try {
-    await Promise.all(awaiter);
-  } catch (err) {
-    console.error(err);
-  }
 }
 
 async function putMapping() {
@@ -276,4 +239,23 @@ async function findAll(awaiter) {
   return awaiter;
 }
 
+async function init() {
+  const result = await client.ping({ requestTimeout: 1000 });
+  // const jsonObjects = parseFile('tmdb_5000_credits');
+  const awaiter = [];
+  // awaiter.push(uploadData());
+  // parseFileStream('movies');
+  // parseFileStream('credits');
+
+  // await resetIndex();
+  // findAll(awaiter);
+  // printAllNames(jsonObjects);
+  // search(awaiter, 'Taylor');
+  // savingDocuments(awaiter, jsonObjects);
+  try {
+    await Promise.all(awaiter);
+  } catch (err) {
+    console.error(err);
+  }
+}
 setImmediate(async () => init());
