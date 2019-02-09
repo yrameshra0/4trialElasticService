@@ -3,7 +3,7 @@ const util = require('util');
 
 const { Readable } = stream;
 const pipeline = util.promisify(stream.pipeline);
-const CreditsTransformer = require('../../../src/indexing/CreditsTransformer');
+const MoviesTransformer = require('../../src/indexing/MoviesTransformer');
 const StreamSink = require('./StreamSink');
 
 class SourceStream extends Readable {
@@ -13,16 +13,9 @@ class SourceStream extends Readable {
 
   _read() {
     this.push({
-      movie_id: '19995',
+      id: '19995',
       title: 'Avatar',
-      cast: [
-        {
-          cast_id: '242',
-          character: 'Jake Sully',
-          name: 'Sam Worthington',
-          gender: 'male',
-        },
-      ],
+      original_language: 'english',
     });
     this.push(null);
   }
@@ -32,21 +25,17 @@ test('verify CreditsTransformer', async () => {
   const sink = new StreamSink();
   await pipeline(
     new SourceStream(),
-    new CreditsTransformer(),
+    new MoviesTransformer(),
     sink,
   );
   const { expectedChunks, frequency } = sink.getStreamStatus();
   expect(frequency).toBe(1);
   expect(expectedChunks).toEqual([
     {
-      castId: '242',
-      character: 'Jake Sully',
-      gender: 'male',
-      id: 'movieId:19995::castId:242',
-      movieId: '19995',
-      name: 'Sam Worthington',
+      id: '19995',
+      originalLanguage: 'english',
       title: 'Avatar',
-      type: 'cast',
+      type: 'movie',
     },
   ]);
 });

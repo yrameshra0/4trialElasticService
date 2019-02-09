@@ -3,7 +3,7 @@ const util = require('util');
 
 const { Readable } = stream;
 const pipeline = util.promisify(stream.pipeline);
-const NewLineSplitter = require('../../../src/indexing/NewLineSplitter');
+const NewLineSplitter = require('../../src/indexing/NewLineSplitter');
 const StreamSink = require('./StreamSink');
 
 class SourceStream extends Readable {
