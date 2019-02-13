@@ -1,5 +1,5 @@
 const { Writable } = require('stream');
-const { blukUpload } = require('../elasticClient');
+const { bulkUpload } = require('../elasticClient');
 
 class ElasticSink extends Writable {
   constructor(highWaterMark = 1) {
@@ -10,7 +10,7 @@ class ElasticSink extends Writable {
   /* eslint-disable class-methods-use-this */
   async _write(chunk, encoding, callback) {
     try {
-      await blukUpload({ body: chunk });
+      await bulkUpload({ body: chunk });
       callback();
     } catch (err) {
       callback(err);
