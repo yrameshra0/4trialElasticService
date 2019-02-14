@@ -12,7 +12,7 @@ class NewLineSplitter extends Transform {
   }
 
   pushLines() {
-    while (this.eolLocation() > 0 || this.buffer.length > 0) {
+    while (this.eolLocation() > 0) {
       let eol = this.eolLocation();
       eol = eol === -1 ? this.buffer.length : eol;
       const line = this.buffer.substring(0, eol);
@@ -29,6 +29,10 @@ class NewLineSplitter extends Transform {
 
   _flush(callback) {
     this.pushLines();
+    if (this.buffer.length > 0) {
+      this.push(this.buffer);
+      this.buffer = '';
+    }
     callback();
   }
 }

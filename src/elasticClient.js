@@ -9,6 +9,7 @@ async function bulkUploadWithRetry(data, trail = 0, maxRetries = 2) {
   } catch (err) {
     if (trail < maxRetries) {
       await new Promise(resolve => setTimeout(resolve, 1000 * (2 ** trail)));
+      // eslint-disable-next-line no-return-await
       return await bulkUploadWithRetry(data, (trail + 1), maxRetries);
     } throw err;
   }
@@ -16,7 +17,7 @@ async function bulkUploadWithRetry(data, trail = 0, maxRetries = 2) {
 
 async function bulkUpload(data = []) {
   const blukData = data.reduce((acc, val) => {
-    acc.push({ indesx: { _index: 'movies', _type: val.type, _id: val.id } });
+    acc.push({ index: { _index: 'movies', _type: val.type, _id: val.id } });
     acc.push(val);
     return acc;
   }, []);

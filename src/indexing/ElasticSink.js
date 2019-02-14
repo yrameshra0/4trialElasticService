@@ -10,7 +10,7 @@ class ElasticSink extends Writable {
   /* eslint-disable class-methods-use-this */
   async _write(chunk, encoding, callback) {
     try {
-      await bulkUpload({ body: chunk });
+      await bulkUpload(chunk);
       callback();
     } catch (err) {
       callback(err);

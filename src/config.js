@@ -3,8 +3,8 @@ const env = process.env.NODE_ENV;
 const properties = {
   local: {
     elasticConfig: {
-      host: 'localhost:9210',
-      log: 'trace',
+      host: 'localhost:9200',
+      log: 'debug',
     },
   },
 };

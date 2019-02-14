@@ -3,7 +3,7 @@ const util = require('util');
 
 const { Readable } = stream;
 const pipeline = util.promisify(stream.pipeline);
-const CSVLineToJSONObject = require('../../src/indexing/CSVLineToJSONObject');
+const CSVLineToJSONObject = require('../../src/indexing/CSVLineToJSON');
 const StreamSink = require('./StreamSink');
 
 class SourceStream extends Readable {
