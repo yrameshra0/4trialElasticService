@@ -13,8 +13,7 @@ class NewLineSplitter extends Transform {
 
   pushLines() {
     while (this.eolLocation() > 0) {
-      let eol = this.eolLocation();
-      eol = eol === -1 ? this.buffer.length : eol;
+      const eol = this.eolLocation();
       const line = this.buffer.substring(0, eol);
       this.push(line);
       this.buffer = this.buffer.slice(eol + 1);
