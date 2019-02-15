@@ -23,6 +23,16 @@ class SourceStream extends Readable {
           gender: 'male',
         },
       ],
+      crew: [
+        {
+          credit_id: '52fe48009251416c750ac9c3',
+          department: 'Directing',
+          gender: 2,
+          id: 2710,
+          job: 'Director',
+          name: 'James Cameron',
+        },
+      ],
     });
     this.push(null);
   }
@@ -36,7 +46,7 @@ test('verify CreditsTransformer', async () => {
     sink,
   );
   const { expectedChunks, frequency } = sink.getStreamStatus();
-  expect(frequency).toBe(1);
+  expect(frequency).toBe(2);
   expect(expectedChunks).toEqual([
     {
       castId: '242',
@@ -47,6 +57,16 @@ test('verify CreditsTransformer', async () => {
       name: 'Sam Worthington',
       title: 'Avatar',
       type: 'cast',
+    },
+    {
+      crewId: 2710,
+      gender: 2,
+      id: 'movieId:19995::crewId:2710',
+      job: 'Director',
+      movieId: '19995',
+      name: 'James Cameron',
+      title: 'Avatar',
+      type: 'crew',
     },
   ]);
 });

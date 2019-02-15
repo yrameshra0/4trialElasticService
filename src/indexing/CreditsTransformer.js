@@ -8,12 +8,13 @@ class CreditsTransformer extends Transform {
   }
 
   _transform(movieInfo, encoding, callback) {
+    const { title } = movieInfo;
+    const movieId = movieInfo.movie_id;
+
     movieInfo.cast.forEach((castMember) => {
-      const { title } = movieInfo;
       const {
         character, name, gender,
       } = castMember;
-      const movieId = movieInfo.movie_id;
       const castId = castMember.cast_id;
 
       this.push({
@@ -24,9 +25,28 @@ class CreditsTransformer extends Transform {
         character,
         name,
         gender,
-        type: this.type,
+        type: 'cast',
       });
     });
+
+    movieInfo.crew
+      .filter(val => val.job && val.job === 'Director')
+      .forEach((crewMember) => {
+        const {
+          job, name, gender, id,
+        } = crewMember;
+
+        this.push({
+          id: `movieId:${movieId}::crewId:${id}`,
+          movieId,
+          title,
+          crewId: id,
+          name,
+          job,
+          gender,
+          type: 'crew',
+        });
+      });
     callback();
   }
 }

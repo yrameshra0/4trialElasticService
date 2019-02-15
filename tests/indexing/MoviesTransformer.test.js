@@ -32,9 +32,9 @@ test('verify CreditsTransformer', async () => {
   expect(frequency).toBe(1);
   expect(expectedChunks).toEqual([
     {
-      id: '19995',
+      id: 'movieId:19995',
       originalLanguage: 'english',
-      title: 'Avatar',
+      name: 'Avatar',
       type: 'movie',
     },
   ]);

@@ -11,8 +11,8 @@ class MoviesTransformer extends Transform {
     const { title, id } = movieInfo;
     const originalLanguage = movieInfo.original_language;
     this.push({
-      id,
-      title,
+      id: `movieId:${id}`,
+      name: title,
       originalLanguage,
       type: this.type,
     });

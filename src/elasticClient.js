@@ -17,7 +17,7 @@ async function bulkUploadWithRetry(data, trail = 0, maxRetries = 2) {
 
 async function bulkUpload(data = []) {
   const blukData = data.reduce((acc, val) => {
-    acc.push({ index: { _index: 'movies', _type: val.type, _id: val.id } });
+    acc.push({ index: { _index: 'movies', _type: '_doc', _id: val.id } });
     acc.push(val);
     return acc;
   }, []);
