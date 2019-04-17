@@ -24,7 +24,7 @@ function pushToElastic(fileName, Transformer) {
 
 setImmediate(async () => {
   await Promise.all([
-    pushToElastic('tmdb_5000_credits.csv', CreditsTransformer),
-    pushToElastic('tmdb_5000_movies.csv', MoviesTransformer),
+    pushToElastic('smaller_credits.csv', CreditsTransformer),
+    pushToElastic('smaller_movies.csv', MoviesTransformer),
   ]);
 });

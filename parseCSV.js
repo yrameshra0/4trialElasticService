@@ -12,7 +12,11 @@ async function createIndex() {
   const mappings = {
     _doc: {
       properties: {
-        name: { type: 'keyword' },
+        character: { type: 'text' },
+        title: { type: 'text' },
+        name: { type: 'text' },
+        originalLanguage: { type: 'text' },
+        job: { type: 'text' },
       },
     },
   };
@@ -28,36 +32,10 @@ async function resetIndex() {
   await createIndex();
 }
 
-async function search(term, offset = 0) {
-  const index = 'movies';
-  const body = {
-    query: {
-      wildcard: {
-        name: `*${term}*`,
-      },
-    },
-    _source: ['name', 'title', 'type'],
-  };
-  return client.search({ index, type: '_doc', body });
-}
-
-async function findAll(awaiter) {
-  return client.search({
-    index: 'movies',
-    type: '_doc',
-    body: {
-      query: {
-        match_all: {},
-      },
-    },
-  });
-}
-
 async function init() {
   const result = await client.ping({ requestTimeout: 1000 });
 
-  // await resetIndex();
-  await search('Tom Hanks');
-  // await findAll();
+  await resetIndex();
+  await require('./StoreToElastic');
 }
 setImmediate(async () => init());
