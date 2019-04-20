@@ -4,7 +4,7 @@ const util = require('util');
 const { Readable } = stream;
 const pipeline = util.promisify(stream.pipeline);
 const MoviesTransformer = require('../../src/indexing/MoviesTransformer');
-const StreamSink = require('./StreamSink');
+const StreamSink = require('../utils/StreamSink');
 
 class SourceStream extends Readable {
   constructor() {
