@@ -1,4 +1,5 @@
 const hapi = require('hapi');
+const serverConfiguration = require('../src/api/serverConfiguration');
 
 describe('searching api contracts', () => {
   let server;
@@ -6,10 +7,8 @@ describe('searching api contracts', () => {
   beforeAll(async () => {
     try {
       server = await hapi.server();
-      /**
-       * Default the server starts on a ephemeral port
-       * https://hapijs.com/api#-serveroptionsport
-       */
+      // By default, server starts on a ephemeral port
+      // https://hapijs.com/api#-serveroptionsport
       server.initialize();
     } catch (error) {
       throw error;
@@ -21,7 +20,11 @@ describe('searching api contracts', () => {
     await server.stop();
   });
 
-  test('sample test', async () => {
-    expect(true).toBe(true);
+  test('user preferences based single world movie search', async () => {
+    const response = await server.inject({
+      url: '/movies/user/1/search?text=Sam',
+      method: 'GET',
+    });
+    expect(response.statusCode).toBe(200);
   });
 });
