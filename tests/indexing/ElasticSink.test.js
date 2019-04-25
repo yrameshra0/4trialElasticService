@@ -22,20 +22,14 @@ class SourceStream extends Readable {
 test('verify ElasticSink when successful', async () => {
   elasticClient.bulkUpload.mockReturnValueOnce(Promise.resolve());
 
-  await pipeline(
-    new SourceStream(),
-    new ElasticSink(),
-  );
+  await pipeline(new SourceStream(), new ElasticSink());
 
   expect(elasticClient.bulkUpload).toHaveBeenCalledTimes(2);
 });
 test('verify ElasticSink when un-successful', async () => {
   elasticClient.bulkUpload.mockReturnValueOnce(Promise.reject(new Error('Faking elastic error')));
   try {
-    await pipeline(
-      new SourceStream(),
-      new ElasticSink(),
-    );
+    await pipeline(new SourceStream(), new ElasticSink());
   } catch (error) {
     expect(error.message).toBe('Faking elastic error');
   }

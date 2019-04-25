@@ -19,11 +19,7 @@ class SourceStream extends Readable {
 
 test('verify NewLineSplitter', async () => {
   const sink = new StreamSink();
-  await pipeline(
-    new SourceStream(),
-    new NewLineSplitter(),
-    sink,
-  );
+  await pipeline(new SourceStream(), new NewLineSplitter(), sink);
 
   const { expectedChunks, frequency } = sink.getStreamStatus();
   expect(frequency).toBe(3);

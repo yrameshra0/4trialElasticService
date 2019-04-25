@@ -20,11 +20,7 @@ class SourceStream extends Readable {
 
 test('verify CSVLineToJSONObject', async () => {
   const sink = new StreamSink();
-  await pipeline(
-    new SourceStream(),
-    new CSVLineToJSONObject(),
-    sink,
-  );
+  await pipeline(new SourceStream(), new CSVLineToJSONObject(), sink);
 
   const { expectedChunks, frequency } = sink.getStreamStatus();
   expect(frequency).toBe(1);

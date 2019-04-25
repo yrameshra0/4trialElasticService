@@ -23,11 +23,7 @@ class SourceStream extends Readable {
 
 test('verify BatchEmitter', async () => {
   const sink = new StreamSink();
-  await pipeline(
-    new SourceStream(),
-    new BatchEmitter(),
-    sink,
-  );
+  await pipeline(new SourceStream(), new BatchEmitter(), sink);
   const { expectedChunks, frequency } = sink.getStreamStatus();
   expect(frequency).toBe(2);
   expect(expectedChunks).toEqual([[1, 2, 3, 4, 5], [6]]);

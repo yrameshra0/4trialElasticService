@@ -23,11 +23,7 @@ class SourceStream extends Readable {
 
 test('verify CreditsTransformer', async () => {
   const sink = new StreamSink();
-  await pipeline(
-    new SourceStream(),
-    new MoviesTransformer(),
-    sink,
-  );
+  await pipeline(new SourceStream(), new MoviesTransformer(), sink);
   const { expectedChunks, frequency } = sink.getStreamStatus();
   expect(frequency).toBe(1);
   expect(expectedChunks).toEqual([

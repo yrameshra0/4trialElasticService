@@ -8,10 +8,11 @@ async function bulkUploadWithRetry(data, trail = 0, maxRetries = 2) {
     return await elasticClient.bulk({ body: data });
   } catch (err) {
     if (trail < maxRetries) {
-      await new Promise(resolve => setTimeout(resolve, 1000 * (2 ** trail)));
+      await new Promise(resolve => setTimeout(resolve, 1000 * 2 ** trail));
       // eslint-disable-next-line no-return-await
-      return await bulkUploadWithRetry(data, (trail + 1), maxRetries);
-    } throw err;
+      return await bulkUploadWithRetry(data, trail + 1, maxRetries);
+    }
+    throw err;
   }
 }
 
@@ -23,7 +24,6 @@ async function bulkUpload(data = []) {
   }, []);
   await bulkUploadWithRetry(blukData);
 }
-
 
 module.exports = {
   bulkUpload,

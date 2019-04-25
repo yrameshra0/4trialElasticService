@@ -1,16 +1,33 @@
 {
-    "extends": "airbnb-base",
-    "env": {
-        "jest": true,
-        "node": true
+  "env": {
+    "jest": true,
+    "node": true,
+    "es6": true
+  },
+  "plugins": [
+    "prettier"
+  ],
+  "extends": [
+    "airbnb",
+    "prettier"
+  ],
+  "parserOptions": {
+    "ecmaVersion": 2018,
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "jsx": true,
+      "spread": true
     },
-    "plugins": [],
     "rules": {
-        "max-len": [
-            "error",
-            {
-                "code": 180
-            }
-        ]
+      "prettier/prettier": [
+        "error"
+      ],
+      "max-len": [
+        "error",
+        {
+          "code": 180
+        }
+      ]
     }
+  }
 }
