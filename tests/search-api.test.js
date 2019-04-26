@@ -1,15 +1,14 @@
 const hapi = require('hapi');
 const serverConfiguration = require('../src/api/serverConfiguration');
 
+jest.setTimeout(100000);
+
 describe('searching api contracts', () => {
   let server;
 
   beforeAll(async () => {
     try {
-      server = await hapi.server();
-      // By default, server starts on a ephemeral port
-      // https://hapijs.com/api#-serveroptionsport
-      server.initialize();
+      server = await serverConfiguration.init();
     } catch (error) {
       throw error;
     }

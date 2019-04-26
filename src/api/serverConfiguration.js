@@ -1,27 +1,38 @@
-const hapi = require('hapi');
+const Hapi = require('hapi');
 const { inspect } = require('util');
 
-async function init() {
-  const server = hapi.server({});
+const server = new Hapi.server({});
+const printMessage = message => console.log(inspect(message, false, Number.MAX_SAFE_INTEGER));
 
+async function init() {
   server.route({
     method: 'GET',
     path: '/movies/user/{userId}/search',
     handler: (request, headers) => {
-      console.log(`REQUEST -- ${inspect(request, false, Number.MAX_SAFE_INTEGER)}`);
-      console.log(`HEADERS -- ${inspect(headers, false, Number.MAX_SAFE_INTEGER)}`);
-      console.log('Request Handled');
+      printMessage(request);
+      printMessage(headers);
+      printMessage('Request Handled');
       return 'Hello World !!';
     },
   });
 
+  await server.initialize();
+  printMessage({ 'Server Initialize': server.info });
+  return server;
+}
+
+async function start() {
   await server.start();
-  console.log('Server started');
+  printMessage({ 'Server Started': server.info });
+  return server;
 }
 
 process.on('unhandledRejection', err => {
-  console.log(err);
+  printMessage(err);
   process.exit(1);
 });
 
-init();
+module.exports = {
+  init,
+  start,
+};
