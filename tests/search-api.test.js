@@ -1,7 +1,4 @@
-const hapi = require('hapi');
 const serverConfiguration = require('../src/api/serverConfiguration');
-
-jest.setTimeout(100000);
 
 describe('searching api contracts', () => {
   let server;
