@@ -1,7 +1,7 @@
 const fs = require('fs');
 const util = require('util');
 
-const isTest = (process.env.NODE_ENV || 'test').toLowerCase() === 'test';
+const isTest = () => (process.env.NODE_ENV || 'test').toLowerCase() === 'test';
 
 async function recursivePathBuilder(srcDir, passOn = []) {
   let files = await util.promisify(fs.readdir)(srcDir);
@@ -17,28 +17,39 @@ async function apisToLoad() {
   const files = await recursivePathBuilder(srcDir);
 
   const apiListings = files.filter(file => file.match(/\/api\//));
+  const filesUnderTestsOrMock = file => file.match(/(_{2}).+(_{2})/);
+  const filesNotUnderTestOrMock = file => !filesUnderTestsOrMock(file);
 
-  if (isTest) {
-    return apiListings.filter(file => file.match(/(_{2}).+(_{2})/));
+  if (isTest()) {
+    return apiListings.filter(filesUnderTestsOrMock);
   }
 
-  return apiListings;
+  return apiListings.filter(filesNotUnderTestOrMock);
 }
 async function initRoutes() {
   const apis = await apisToLoad();
+  console.log(JSON.stringify({ apis }));
   /* eslint-disable-next-line */
   const loadedFiles = await Promise.all(apis.map(file => require(file)));
   return loadedFiles;
 }
 
+const addRouteToServer = (server, route) => {
+  try {
+    server.route(route);
+  } catch (err) {
+    // no-op
+  }
+};
+
 async function register(server, options) {
   const allRoutes = await initRoutes();
   allRoutes.forEach(route => {
     if (!Array.isArray(route)) {
-      server.route(route);
+      addRouteToServer(server, route);
       return;
     }
-    route.forEach(innerRoute => server.route(innerRoute));
+    route.forEach(innerRoute => addRouteToServer(server, innerRoute));
   });
 }
 
