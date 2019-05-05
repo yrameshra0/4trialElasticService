@@ -1,7 +1,5 @@
-const cls = require('continuation-local-storage');
-const { logger, setup } = require('../logger');
-
-const loggerContext = 'logger-context-test';
+const loggerContext = require('../logger_context');
+const logger = require('../logger');
 
 describe('logger functionality', () => {
   test('when initalization not done and without complex object', () => {
@@ -29,7 +27,7 @@ describe('logger functionality', () => {
   });
 
   test('request logging', () => {
-    const namespace = cls.createNamespace(loggerContext);
+    const context = loggerContext.getContext();
     const request = {
       log: (type, { message, data }) => {
         expect(type).toBe('info');
@@ -38,15 +36,14 @@ describe('logger functionality', () => {
       },
     };
 
-    setup(loggerContext);
-    namespace.run(() => {
-      namespace.set('request', request);
+    context.run(() => {
+      context.set('request', request);
       logger.info('With Request Initialization', { more: 'data' });
     });
   });
 
   test('server logging', () => {
-    const namespace = cls.createNamespace(loggerContext);
+    const context = loggerContext.getContext();
     const server = {
       log: (type, { message, data }) => {
         expect(type).toBe('info');
@@ -55,9 +52,8 @@ describe('logger functionality', () => {
       },
     };
 
-    setup(loggerContext);
-    namespace.run(() => {
-      namespace.set('server', server);
+    context.run(() => {
+      context.set('server', server);
       logger.info('With Request Initialization', { more: 'data' });
     });
   });

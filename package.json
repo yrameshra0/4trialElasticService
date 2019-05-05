@@ -5,13 +5,13 @@
   "main": "index.js",
   "scripts": {
     "test": "jest",
-    "coverage":"jest --collectCoverage",
+    "coverage": "jest --collectCoverage",
     "code-format": "npx prettier --write ./src/**/*.js && npx prettier --write ./tests/**/*.js && npx eslint --fix ./src/**/*.js && npx eslint --fix ./tests/**/*.js"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "continuation-local-storage": "^3.2.1",
+    "cls-hooked": "^4.2.2",
     "elasticsearch": "^15.3.0",
     "hapi": "^18.1.0"
   },

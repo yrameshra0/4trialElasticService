@@ -1,8 +1,5 @@
-const cls = require('continuation-local-storage');
-
 const { inspect } = require('util');
-
-let loggerContext;
+const loggerContext = require('./logger_context');
 
 /* eslint-disable no-console */
 function consoleLog(type, message, data) {
@@ -23,14 +20,15 @@ function consoleLog(type, message, data) {
 
 const logOverConext = (type, message, data) => {
   try {
-    const namespace = cls.getNamespace(loggerContext);
-    const request = namespace.get('request');
+    const context = loggerContext.getContext();
+
+    const request = context.get('request');
     if (request) {
       request.log(type, { message, data });
       return true;
     }
 
-    const server = namespace.get('server');
+    const server = context.get('server');
     if (server) {
       server.log(type, { message, data });
       return true;
@@ -51,11 +49,7 @@ function log(type, message, data) {
   }
 }
 
-const setup = setupContext => {
-  loggerContext = setupContext;
-};
-
-const logger = {
+module.exports = {
   info: (message, ...rest) => {
     log('info', message, rest);
   },
@@ -68,9 +62,4 @@ const logger = {
   error: (message, ...rest) => {
     log('error', message, rest);
   },
-};
-
-module.exports = {
-  logger,
-  setup,
 };
