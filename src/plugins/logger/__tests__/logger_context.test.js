@@ -1,21 +1,21 @@
-const loggerContext = require('../logger_context.js');
+const { getContext, setRequest, setServer, getRequest, getServer } = require('../logger_context.js');
 
 describe('logger context', () => {
   test('setup logger context', () => {
-    expect(loggerContext.getContext()).toBeDefined();
+    expect(getContext()).toBeDefined();
   });
 
   test('use context to set values', async () => {
-    const context = loggerContext.getContext();
+    const context = getContext();
     const functionCall = () => {
-      const localContext = loggerContext.getContext();
+      const localContext = getContext();
       return localContext.get('my-key');
     };
 
     const valueInsideTimer = () => {
       return new Promise(resolve =>
         setImmediate(() => {
-          const localContext = loggerContext.getContext();
+          const localContext = getContext();
           resolve(localContext.get('my-key'));
         }),
       );
@@ -25,6 +25,24 @@ describe('logger context', () => {
       context.set('my-key', 'my-value');
       expect(functionCall()).toBe('my-value');
       await expect(valueInsideTimer()).resolves.toBe('my-value');
+    });
+  });
+
+  test('context sets request', async () => {
+    const context = getContext();
+    await context.runAndReturn(async () => {
+      setRequest('my-request');
+
+      expect(getRequest()).toBe('my-request');
+    });
+  });
+
+  test('context sets server', async () => {
+    const context = getContext();
+    await context.runAndReturn(async () => {
+      setServer('my-server');
+
+      expect(getServer()).toBe('my-server');
     });
   });
 });

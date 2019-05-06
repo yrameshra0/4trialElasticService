@@ -1,4 +1,4 @@
-const loggerContext = require('../logger_context');
+const { getContext, setRequest, setServer } = require('../logger_context');
 const logger = require('../logger');
 
 describe('logger functionality', () => {
@@ -27,7 +27,7 @@ describe('logger functionality', () => {
   });
 
   test('request logging', () => {
-    const context = loggerContext.getContext();
+    const context = getContext();
     const request = {
       log: (type, { message, data }) => {
         expect(type).toBe('info');
@@ -37,13 +37,13 @@ describe('logger functionality', () => {
     };
 
     context.run(() => {
-      context.set('request', request);
+      setRequest(request);
       logger.info('With Request Initialization', { more: 'data' });
     });
   });
 
   test('server logging', () => {
-    const context = loggerContext.getContext();
+    const context = getContext();
     const server = {
       log: (type, { message, data }) => {
         expect(type).toBe('info');
@@ -53,7 +53,7 @@ describe('logger functionality', () => {
     };
 
     context.run(() => {
-      context.set('server', server);
+      setServer(server);
       logger.info('With Request Initialization', { more: 'data' });
     });
   });
