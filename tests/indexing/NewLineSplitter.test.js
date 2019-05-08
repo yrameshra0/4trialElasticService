@@ -4,7 +4,7 @@ const util = require('util');
 const { Readable } = stream;
 const pipeline = util.promisify(stream.pipeline);
 const NewLineSplitter = require('../../src/indexing/NewLineSplitter');
-const StreamSink = require('./StreamSink');
+const StreamSink = require('../utils/StreamSink');
 
 class SourceStream extends Readable {
   constructor() {
@@ -19,11 +19,7 @@ class SourceStream extends Readable {
 
 test('verify NewLineSplitter', async () => {
   const sink = new StreamSink();
-  await pipeline(
-    new SourceStream(),
-    new NewLineSplitter(),
-    sink,
-  );
+  await pipeline(new SourceStream(), new NewLineSplitter(), sink);
 
   const { expectedChunks, frequency } = sink.getStreamStatus();
   expect(frequency).toBe(3);

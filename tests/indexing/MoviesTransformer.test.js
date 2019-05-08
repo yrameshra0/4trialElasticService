@@ -4,7 +4,7 @@ const util = require('util');
 const { Readable } = stream;
 const pipeline = util.promisify(stream.pipeline);
 const MoviesTransformer = require('../../src/indexing/MoviesTransformer');
-const StreamSink = require('./StreamSink');
+const StreamSink = require('../utils/StreamSink');
 
 class SourceStream extends Readable {
   constructor() {
@@ -23,11 +23,7 @@ class SourceStream extends Readable {
 
 test('verify CreditsTransformer', async () => {
   const sink = new StreamSink();
-  await pipeline(
-    new SourceStream(),
-    new MoviesTransformer(),
-    sink,
-  );
+  await pipeline(new SourceStream(), new MoviesTransformer(), sink);
   const { expectedChunks, frequency } = sink.getStreamStatus();
   expect(frequency).toBe(1);
   expect(expectedChunks).toEqual([

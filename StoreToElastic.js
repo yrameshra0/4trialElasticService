@@ -10,21 +10,10 @@ const ElasticSink = require('./src/indexing/ElasticSink');
 
 const pipeline = promisify(stream.pipeline);
 
-
 function pushToElastic(fileName, Transformer) {
-  return pipeline(
-    fs.createReadStream(fileName, { highWaterMark: 1 }),
-    new NewLineSplitter(),
-    new CSVLineToJSON(),
-    new Transformer(),
-    new BactchEmitter(),
-    new ElasticSink(),
-  );
+  return pipeline(fs.createReadStream(fileName, { highWaterMark: 1 }), new NewLineSplitter(), new CSVLineToJSON(), new Transformer(), new BactchEmitter(), new ElasticSink());
 }
 
 setImmediate(async () => {
-  await Promise.all([
-    pushToElastic('smaller_credits.csv', CreditsTransformer),
-    pushToElastic('smaller_movies.csv', MoviesTransformer),
-  ]);
+  await Promise.all([pushToElastic('smaller_credits.csv', CreditsTransformer), pushToElastic('smaller_movies.csv', MoviesTransformer)]);
 });

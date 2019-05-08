@@ -4,7 +4,7 @@ const util = require('util');
 const { Readable } = stream;
 const pipeline = util.promisify(stream.pipeline);
 const CSVLineToJSONObject = require('../../src/indexing/CSVLineToJSON');
-const StreamSink = require('./StreamSink');
+const StreamSink = require('../utils/StreamSink');
 
 class SourceStream extends Readable {
   constructor() {
@@ -20,11 +20,7 @@ class SourceStream extends Readable {
 
 test('verify CSVLineToJSONObject', async () => {
   const sink = new StreamSink();
-  await pipeline(
-    new SourceStream(),
-    new CSVLineToJSONObject(),
-    sink,
-  );
+  await pipeline(new SourceStream(), new CSVLineToJSONObject(), sink);
 
   const { expectedChunks, frequency } = sink.getStreamStatus();
   expect(frequency).toBe(1);
