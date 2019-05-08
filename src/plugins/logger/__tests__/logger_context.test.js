@@ -38,11 +38,8 @@ describe('logger context', () => {
   });
 
   test('context sets server', async () => {
-    const context = getContext();
-    await context.runAndReturn(async () => {
-      setServer('my-server');
+    setServer('my-server');
 
-      expect(getServer()).toBe('my-server');
-    });
+    expect(getServer()).toBe('my-server');
   });
 });

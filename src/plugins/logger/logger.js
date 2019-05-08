@@ -1,5 +1,5 @@
 const { inspect } = require('util');
-const loggerContext = require('./logger_context');
+const { getRequest, getServer } = require('./logger_context');
 
 /* eslint-disable no-console */
 function consoleLog(type, message, data) {
@@ -20,15 +20,13 @@ function consoleLog(type, message, data) {
 
 const logOverConext = (type, message, data) => {
   try {
-    const context = loggerContext.getContext();
-
-    const request = context.get('request');
+    const request = getRequest();
     if (request) {
       request.log(type, { message, data });
       return true;
     }
 
-    const server = context.get('server');
+    const server = getServer();
     if (server) {
       server.log(type, { message, data });
       return true;

@@ -1,5 +1,5 @@
 const hapi = require('hapi');
-const routesRegister = require('../routes_register.plugin');
+const routesRegister = require('..');
 
 describe('routes_register plugin tests', () => {
   const validateRegistration = async (server, { url, method }, statusCode = 200) =>

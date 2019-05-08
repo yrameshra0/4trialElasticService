@@ -1,8 +1,8 @@
 const cls = require('cls-hooked');
 
 const isTest = () => (process.env.NODE_ENV || 'test').toLowerCase() === 'test';
-const serverKey = 'server';
 const requestKey = 'request';
+let server;
 
 const currentContextKey = () => (isTest() ? 'logger-context-test' : 'logger-context');
 
@@ -15,8 +15,10 @@ function getContext() {
 }
 module.exports = {
   getContext,
-  getServer: () => getContext().get(serverKey),
+  getServer: () => server,
   getRequest: () => getContext().get(requestKey),
-  setServer: server => getContext().set(serverKey, server),
+  setServer: incomingServer => {
+    server = incomingServer;
+  },
   setRequest: request => getContext().set(requestKey, request),
 };
