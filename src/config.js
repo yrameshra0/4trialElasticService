@@ -7,6 +7,7 @@ const properties = {
       log: 'debug',
     },
   },
+  index: 'movies',
 };
 
 module.exports = (() => properties[env] || properties.local)();

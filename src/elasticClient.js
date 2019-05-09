@@ -1,11 +1,13 @@
 const { Client } = require('elasticsearch');
-const { elasticConfig } = require('./config');
+const config = require('./config');
 
-const elasticClient = new Client({ ...elasticConfig });
+const { index, elasticConfig } = config;
+
+const elastic = new Client({ ...elasticConfig });
 
 async function bulkUploadWithRetry(data, trail = 0, maxRetries = 2) {
   try {
-    return await elasticClient.bulk({ body: data });
+    return await elastic.bulk({ body: data });
   } catch (err) {
     if (trail < maxRetries) {
       await new Promise(resolve => setTimeout(resolve, 1000 * 2 ** trail));
@@ -18,13 +20,37 @@ async function bulkUploadWithRetry(data, trail = 0, maxRetries = 2) {
 
 async function bulkUpload(data = []) {
   const blukData = data.reduce((acc, val) => {
-    acc.push({ index: { _index: 'movies', _type: '_doc', _id: val.id } });
+    acc.push({ index: { _index: index, _type: '_doc', _id: val.id } });
     acc.push(val);
     return acc;
   }, []);
   await bulkUploadWithRetry(blukData);
 }
 
+async function createIndex() {
+  const mappings = {
+    _doc: {
+      properties: {
+        character: { type: 'text' },
+        title: { type: 'text' },
+        name: { type: 'text' },
+        originalLanguage: { type: 'text' },
+        job: { type: 'text' },
+      },
+    },
+  };
+  await elastic.indices.create({ index, body: { mappings } });
+}
+
+async function resetIndex() {
+  if (await elastic.indices.exists({ index })) {
+    await elastic.indices.delete({ index });
+  }
+
+  await createIndex();
+}
+
 module.exports = {
   bulkUpload,
+  resetIndex,
 };

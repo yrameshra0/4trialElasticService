@@ -3,9 +3,10 @@ const util = require('util');
 
 const { Readable } = stream;
 const pipeline = util.promisify(stream.pipeline);
-jest.mock('../../src/elasticClient.js');
 const elasticClient = require('../../src/elasticClient');
 const ElasticSink = require('../../src/indexing/ElasticSink');
+
+jest.mock('../../src/elasticClient.js');
 
 class SourceStream extends Readable {
   constructor() {
