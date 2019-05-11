@@ -3,7 +3,7 @@ const util = require('util');
 
 const { Readable } = stream;
 const pipeline = util.promisify(stream.pipeline);
-const StreamSink = require('../utils/StreamSink');
+const StreamSink = require('./utils/StreamSink');
 const BatchEmitter = require('../../src/indexing/BatchEmitter');
 
 class SourceStream extends Readable {
