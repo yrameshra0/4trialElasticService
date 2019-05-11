@@ -6,7 +6,7 @@ const data = {
   id: 'someid',
 };
 
-describe('Elastic client negative tests', () => {
+describe('Elastic client and actions', () => {
   afterEach(() => {
     jest.clearAllMocks();
   });
