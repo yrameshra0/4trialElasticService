@@ -3,10 +3,10 @@ const util = require('util');
 
 const { Readable } = stream;
 const pipeline = util.promisify(stream.pipeline);
-const elasticClient = require('../../src/elasticClient');
+const elasticActions = require('../../src/elastic/actions');
 const ElasticSink = require('../../src/indexing/ElasticSink');
 
-jest.mock('../../src/elasticClient.js');
+jest.mock('../../src/elastic/actions');
 
 class SourceStream extends Readable {
   constructor() {
@@ -21,14 +21,14 @@ class SourceStream extends Readable {
 }
 
 test('verify ElasticSink when successful', async () => {
-  elasticClient.bulkUpload.mockReturnValueOnce(Promise.resolve());
+  elasticActions.bulkUpload.mockReturnValueOnce(Promise.resolve());
 
   await pipeline(new SourceStream(), new ElasticSink());
 
-  expect(elasticClient.bulkUpload).toHaveBeenCalledTimes(2);
+  expect(elasticActions.bulkUpload).toHaveBeenCalledTimes(2);
 });
 test('verify ElasticSink when un-successful', async () => {
-  elasticClient.bulkUpload.mockReturnValueOnce(Promise.reject(new Error('Faking elastic error')));
+  elasticActions.bulkUpload.mockReturnValueOnce(Promise.reject(new Error('Faking elastic error')));
   try {
     await pipeline(new SourceStream(), new ElasticSink());
   } catch (error) {

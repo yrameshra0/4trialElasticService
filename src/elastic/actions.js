@@ -1,13 +1,11 @@
-const { Client } = require('elasticsearch');
-const config = require('./config');
+const client = require('./');
+const config = require('../config');
 
-const { index, elasticConfig } = config;
-
-const elastic = new Client({ ...elasticConfig });
+const { index } = config;
 
 async function bulkUploadWithRetry(data, trail = 0, maxRetries = 2) {
   try {
-    return await elastic.bulk({ body: data });
+    return await client.bulk({ body: data });
   } catch (err) {
     if (trail < maxRetries) {
       await new Promise(resolve => setTimeout(resolve, 1000 * 2 ** trail));
@@ -39,12 +37,12 @@ async function createIndex() {
       },
     },
   };
-  await elastic.indices.create({ index, body: { mappings } });
+  await client.indices.create({ index, body: { mappings } });
 }
 
 async function resetIndex() {
-  if (await elastic.indices.exists({ index })) {
-    await elastic.indices.delete({ index });
+  if (await client.indices.exists({ index })) {
+    await client.indices.delete({ index });
   }
 
   await createIndex();
