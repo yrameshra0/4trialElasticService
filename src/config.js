@@ -6,8 +6,8 @@ const properties = {
       host: 'localhost:9200',
       log: 'debug',
     },
+    index: 'movies',
   },
-  index: 'movies',
 };
 
 module.exports = (() => properties[env] || properties.local)();

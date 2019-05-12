@@ -1,5 +1,6 @@
 const client = require('./_client');
 const config = require('../config');
+const logger = require('../logger');
 
 const { index } = config;
 
@@ -48,7 +49,33 @@ async function resetIndex() {
   await createIndex();
 }
 
+function searchBody(searchTerm, preferences) {
+  const matchBlockGenerator = items =>
+    items.map(item => ({
+      match: {
+        name: item,
+      },
+    }));
+
+  return {
+    query: {
+      bool: {
+        must: matchBlockGenerator([searchTerm]),
+        should: matchBlockGenerator(preferences),
+      },
+    },
+  };
+}
+async function search({ searchTerm, preferences }) {
+  logger.info('Forwarding search to elastic:', { searchTerm, preferences });
+  const type = '_doc';
+  const body = searchBody(searchTerm, preferences);
+
+  return client.search({ index, type, body });
+}
+
 module.exports = {
   bulkUpload,
   resetIndex,
+  search,
 };
