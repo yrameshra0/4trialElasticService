@@ -1,5 +1,5 @@
 const { inspect } = require('util');
-const { getRequest, getServer } = require('./logger_context');
+const { getRequest, getServer } = require('./plugins/logger/logger_context');
 
 /* eslint-disable no-console */
 function consoleLog(type, message, data) {

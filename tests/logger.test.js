@@ -1,5 +1,5 @@
-const { getContext, setRequest, setServer } = require('../logger_context');
-const logger = require('../logger');
+const { getContext, setRequest, setServer } = require('../src/plugins/logger/logger_context');
+const logger = require('../src/logger');
 
 describe('logger functionality', () => {
   test('when initalization not done and without complex object', () => {

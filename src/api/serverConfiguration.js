@@ -1,5 +1,5 @@
 const Hapi = require('hapi');
-const logger = require('../plugins/logger/logger');
+const logger = require('../logger');
 const loggerPlugin = require('../plugins/logger');
 const routePlugin = require('../plugins/route_register');
 const goodPlugin = require('../plugins/good-console');
