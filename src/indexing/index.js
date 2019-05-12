@@ -7,7 +7,7 @@ const NewLineSplitter = require('./NewLineSplitter');
 const CreditsTransformer = require('./CreditsTransformer');
 const MoviesTransformer = require('./MoviesTransformer');
 const ElasticSink = require('./ElasticSink');
-const elasticActions = require('../elastic/actions');
+const elasticClient = require('../elastic/');
 
 const pipeline = promisify(stream.pipeline);
 
@@ -25,7 +25,7 @@ function pushToElastic(fileName, Transformer) {
 
 async function updloadToElastic(full = false) {
   const filePrefix = `./csvs/${full ? 'tmdb_5000' : 'smaller'}`;
-  await elasticActions.resetIndex();
+  await elasticClient.resetIndex();
   /* prettier-ignore */
   await Promise.all([
       pushToElastic(`${filePrefix}_credits.csv`, CreditsTransformer),

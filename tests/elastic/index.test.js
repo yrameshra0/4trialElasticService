@@ -1,5 +1,6 @@
 const client = require('../../src/elastic');
-const actions = require('../../src/elastic/actions');
+
+const elastic = require('../../src/elastic/_client');
 
 const data = {
   type: 'somemovie',
@@ -12,16 +13,16 @@ describe('Elastic client and actions', () => {
   });
 
   test('Failure with bulk upload', async () => {
-    const blukSpy = jest.spyOn(client, 'bulk').mockRejectedValue(new Error('Error condition'));
+    const blukSpy = jest.spyOn(elastic, 'bulk').mockRejectedValue(new Error('Error condition'));
 
-    await expect(actions.bulkUpload([data])).rejects.toThrowError('Error condition');
+    await expect(client.bulkUpload([data])).rejects.toThrowError('Error condition');
     expect(blukSpy).toHaveBeenCalledTimes(3);
   });
 
   test('Successful upload data to elastic', async () => {
-    const blukSpy = jest.spyOn(client, 'bulk').mockResolvedValue();
+    const blukSpy = jest.spyOn(elastic, 'bulk').mockResolvedValue();
 
-    await actions.bulkUpload([data]);
+    await client.bulkUpload([data]);
     expect(blukSpy).toHaveBeenCalledTimes(1);
   });
 });

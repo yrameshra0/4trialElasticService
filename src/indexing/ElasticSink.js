@@ -1,5 +1,5 @@
 const { Writable } = require('stream');
-const { bulkUpload } = require('../elastic/actions');
+const { bulkUpload } = require('../elastic/');
 
 class ElasticSink extends Writable {
   constructor(highWaterMark = 1) {

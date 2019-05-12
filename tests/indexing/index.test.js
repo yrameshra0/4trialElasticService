@@ -1,10 +1,10 @@
 const fs = require('fs');
 const { Readable } = require('stream');
 const indexing = require('../../src/indexing');
-const elasticActions = require('../../src/elastic/actions');
+const elasticClient = require('../../src/elastic/');
 
 jest.mock('fs');
-jest.mock('../../src/elastic/actions');
+jest.mock('../../src/elastic/');
 
 class MockStream extends Readable {
   constructor() {
@@ -26,7 +26,7 @@ describe('indexing csvs', () => {
 
     await indexing.updloadToElastic();
 
-    expect(elasticActions.resetIndex).toBeCalled();
+    expect(elasticClient.resetIndex).toBeCalled();
     expect(fs.createReadStream).toBeCalledTimes(2);
     expect(fs.createReadStream).toBeCalledWith('./csvs/smaller_credits.csv', { highWaterMark: 1 });
     expect(fs.createReadStream).toBeCalledWith('./csvs/smaller_movies.csv', { highWaterMark: 1 });
@@ -37,7 +37,7 @@ describe('indexing csvs', () => {
 
     await indexing.updloadToElastic(true);
 
-    expect(elasticActions.resetIndex).toBeCalled();
+    expect(elasticClient.resetIndex).toBeCalled();
     expect(fs.createReadStream).toBeCalledTimes(2);
     expect(fs.createReadStream).toBeCalledWith('./csvs/tmdb_5000_credits.csv', { highWaterMark: 1 });
     expect(fs.createReadStream).toBeCalledWith('./csvs/tmdb_5000_movies.csv', { highWaterMark: 1 });
