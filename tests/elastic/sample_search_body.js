@@ -12,12 +12,32 @@ module.exports = {
         should: [
           {
             match: {
-              name: 'Sam Worthington',
+              name: 'Denzel Washington',
+            },
+          },
+          {
+            match: {
+              name: 'Anne Hathaway',
             },
           },
           {
             match: {
               name: 'Tom Hanks',
+            },
+          },
+          {
+            match: {
+              name: 'Guy Ritchie',
+            },
+          },
+          {
+            match: {
+              name: 'Quentin Tarantino',
+            },
+          },
+          {
+            match: {
+              originalLanguage: 'English',
             },
           },
         ],

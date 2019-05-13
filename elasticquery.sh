@@ -19,6 +19,11 @@ req="{
                     \"match\": {
                         \"name\": \"Tom Hanks\"
                     }
+                },
+                {
+                    \"match\": {
+                        \"ewwe\": \"English\"
+                    }
                 }
             ]
         }

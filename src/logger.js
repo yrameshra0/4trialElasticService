@@ -15,7 +15,16 @@ function consoleLog(type, message, data) {
     return;
   }
 
-  consoles[type](message, inspect(data, false, 1));
+  const safeJsonStringify = obj => {
+    try {
+      return JSON.stringify(obj);
+    } catch (error) {
+      // Circular error
+      return inspect(obj, false, 10);
+    }
+  };
+
+  consoles[type](message, safeJsonStringify(data));
 }
 
 const logOverConext = (type, message, data) => {

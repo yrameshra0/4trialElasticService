@@ -29,7 +29,13 @@ describe('Elastic client and actions', () => {
   test('Successful searching', async () => {
     const searchSpy = jest.spyOn(elastic, 'search').mockResolvedValue();
 
-    await client.search({ searchTerm: 'Sam', preferences: ['Sam Worthington', 'Tom Hanks'] });
+    const preferences = {
+      actors: ['Denzel Washington', 'Anne Hathaway', 'Tom Hanks'],
+      directors: ['Guy Ritchie', 'Quentin Tarantino'],
+      langaugages: ['English'],
+    };
+
+    await client.search({ searchTerm: 'Sam', preferences });
 
     expect(searchSpy).toHaveBeenCalledTimes(1);
     expect(searchSpy).toBeCalledWith(sampleSearchBody);

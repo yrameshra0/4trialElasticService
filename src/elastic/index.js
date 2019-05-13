@@ -35,6 +35,7 @@ async function createIndex() {
         name: { type: 'text' },
         originalLanguage: { type: 'text' },
         job: { type: 'text' },
+        type: { type: 'text' },
       },
     },
   };
@@ -50,10 +51,10 @@ async function resetIndex() {
 }
 
 function searchBody(searchTerm, preferences) {
-  const matchBlockGenerator = items =>
+  const matchBlockGenerator = (items, key = 'name') =>
     items.map(item => ({
       match: {
-        name: item,
+        [key]: item,
       },
     }));
 
@@ -61,7 +62,7 @@ function searchBody(searchTerm, preferences) {
     query: {
       bool: {
         must: matchBlockGenerator([searchTerm]),
-        should: matchBlockGenerator(preferences),
+        should: [...matchBlockGenerator([...preferences.actors, ...preferences.directors]), ...matchBlockGenerator(preferences.langaugages, 'originalLanguage')],
       },
     },
   };

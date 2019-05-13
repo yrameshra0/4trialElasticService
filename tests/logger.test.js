@@ -19,7 +19,26 @@ describe('logger functionality', () => {
       const spy = jest.spyOn(console, type);
 
       logger[type]('Without any initializaton', { more: 'data' });
-      expect(spy).toBeCalledWith('Without any initializaton', `{ more: 'data' }`);
+      expect(spy).toBeCalledWith('Without any initializaton', `{"more":"data"}`);
+
+      spy.mockRestore();
+      spy.mockReset();
+    });
+  });
+
+  test('when initalization not done with complex circular object', () => {
+    ['info', 'warn', 'error', 'debug'].forEach(type => {
+      const spy = jest.spyOn(console, type);
+
+      const more = { data: 'data' };
+      more.circular = more;
+
+      logger[type]('Without any initializaton', more);
+      expect(spy).toBeCalledWith(
+        'Without any initializaton',
+        `{ data: 'data',
+  circular: { data: 'data', circular: [Circular] } }`,
+      );
 
       spy.mockRestore();
       spy.mockReset();
