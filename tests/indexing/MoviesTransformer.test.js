@@ -31,7 +31,7 @@ test('verify CreditsTransformer', async () => {
       id: 'movieId:19995',
       originalLanguage: 'english',
       name: 'Avatar',
-      type: 'movie',
+      title: 'Avatar',
     },
   ]);
 });

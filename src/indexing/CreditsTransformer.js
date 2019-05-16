@@ -12,37 +12,30 @@ class CreditsTransformer extends Transform {
     const movieId = movieInfo.movie_id;
 
     movieInfo.cast.forEach(castMember => {
-      const { character, name, gender } = castMember;
+      const { name } = castMember;
       const castId = castMember.cast_id;
 
       this.push({
         id: `movieId:${movieId}::castId:${castId}`,
         movieId,
         title,
-        castId,
-        character,
         name,
-        gender,
-        type: 'cast',
       });
     });
 
     movieInfo.crew
-      .filter(val => val.job && val.job === 'Director')
+      .filter(val => (val.job && val.job.toLowerCase()) === 'director')
       .forEach(crewMember => {
-        const { job, name, gender, id } = crewMember;
+        const { name, id } = crewMember;
 
         this.push({
           id: `movieId:${movieId}::crewId:${id}`,
           movieId,
           title,
-          crewId: id,
           name,
-          job,
-          gender,
-          type: 'crew',
         });
       });
+
     callback();
   }
 }

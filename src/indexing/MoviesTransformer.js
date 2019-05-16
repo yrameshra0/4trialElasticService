@@ -13,8 +13,8 @@ class MoviesTransformer extends Transform {
     this.push({
       id: `movieId:${id}`,
       name: title,
+      title,
       originalLanguage,
-      type: this.type,
     });
     callback();
   }

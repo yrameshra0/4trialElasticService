@@ -43,6 +43,11 @@ module.exports = {
         ],
       },
     },
+    sort: [
+      {
+        name: 'asc',
+      },
+    ],
   },
   index: 'movies',
   type: '_doc',

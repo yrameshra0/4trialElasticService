@@ -23,8 +23,8 @@ function pushToElastic(fileName, Transformer) {
         );
 }
 
-async function updloadToElastic(full = false) {
-  const filePrefix = `./csvs/${full ? 'tmdb_5000' : 'smaller'}`;
+async function uploadToElastic(full = false) {
+  const filePrefix = `${__dirname}/csvs/${full ? 'tmdb_5000' : 'smaller'}`;
   await elasticClient.resetIndex();
   /* prettier-ignore */
   await Promise.all([
@@ -34,5 +34,13 @@ async function updloadToElastic(full = false) {
 }
 
 module.exports = {
-  updloadToElastic,
+  uploadToElastic,
 };
+
+setImmediate(async () => {
+  try {
+    await uploadToElastic();
+  } catch (error) {
+    console.error(error);
+  }
+});

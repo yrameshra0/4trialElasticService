@@ -45,24 +45,16 @@ test('verify CreditsTransformer', async () => {
   expect(frequency).toBe(2);
   expect(expectedChunks).toEqual([
     {
-      castId: '242',
-      character: 'Jake Sully',
-      gender: 'male',
       id: 'movieId:19995::castId:242',
       movieId: '19995',
       name: 'Sam Worthington',
       title: 'Avatar',
-      type: 'cast',
     },
     {
-      crewId: 2710,
-      gender: 2,
       id: 'movieId:19995::crewId:2710',
-      job: 'Director',
       movieId: '19995',
       name: 'James Cameron',
       title: 'Avatar',
-      type: 'crew',
     },
   ]);
 });

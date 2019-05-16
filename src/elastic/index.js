@@ -30,12 +30,16 @@ async function createIndex() {
   const mappings = {
     _doc: {
       properties: {
-        character: { type: 'text' },
-        title: { type: 'text' },
-        name: { type: 'text' },
-        originalLanguage: { type: 'text' },
-        job: { type: 'text' },
-        type: { type: 'text' },
+        title: { type: 'keyword' },
+        name: {
+          type: 'text',
+          fields: {
+            raw: {
+              type: 'keyword',
+            },
+          },
+        },
+        originalLanguage: { type: 'keyword' },
       },
     },
   };
@@ -65,6 +69,7 @@ function searchBody(searchTerm, preferences) {
         should: [...matchBlockGenerator([...preferences.actors, ...preferences.directors]), ...matchBlockGenerator(preferences.langaugages, 'originalLanguage')],
       },
     },
+    sort: [{ name: 'asc' }],
   };
 }
 async function search({ searchTerm, preferences }) {

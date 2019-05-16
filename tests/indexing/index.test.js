@@ -24,22 +24,22 @@ describe('indexing csvs', () => {
   test('resets index and uploads smaller csv', async () => {
     fs.createReadStream.mockReturnValue(new MockStream());
 
-    await indexing.updloadToElastic();
+    await indexing.uploadToElastic();
 
     expect(elasticClient.resetIndex).toBeCalled();
     expect(fs.createReadStream).toBeCalledTimes(2);
-    expect(fs.createReadStream).toBeCalledWith('./csvs/smaller_credits.csv', { highWaterMark: 1 });
-    expect(fs.createReadStream).toBeCalledWith('./csvs/smaller_movies.csv', { highWaterMark: 1 });
+    expect(fs.createReadStream).toBeCalledWith(expect.stringMatching(/\/csvs\/smaller_credits\.csv/), { highWaterMark: 1 });
+    expect(fs.createReadStream).toBeCalledWith(expect.stringMatching(/\/csvs\/smaller_movies\.csv/), { highWaterMark: 1 });
   });
 
   test('resets index and uploads original csv', async () => {
     fs.createReadStream.mockReturnValue(new MockStream());
 
-    await indexing.updloadToElastic(true);
+    await indexing.uploadToElastic(true);
 
     expect(elasticClient.resetIndex).toBeCalled();
     expect(fs.createReadStream).toBeCalledTimes(2);
-    expect(fs.createReadStream).toBeCalledWith('./csvs/tmdb_5000_credits.csv', { highWaterMark: 1 });
-    expect(fs.createReadStream).toBeCalledWith('./csvs/tmdb_5000_movies.csv', { highWaterMark: 1 });
+    expect(fs.createReadStream).toBeCalledWith(expect.stringMatching(/\/csvs\/tmdb_5000_credits\.csv/), { highWaterMark: 1 });
+    expect(fs.createReadStream).toBeCalledWith(expect.stringMatching(/\/csvs\/tmdb_5000_movies\.csv/), { highWaterMark: 1 });
   });
 });
