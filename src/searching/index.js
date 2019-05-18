@@ -3,6 +3,7 @@ const elastic = require('../elastic');
 
 function findUserById(userId) {
   const userIdMatch = item => !!item[userId];
+
   const user = userPreferences.find(userIdMatch);
   if (!user) throw new Error('Not found');
 

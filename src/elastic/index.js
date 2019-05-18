@@ -30,6 +30,7 @@ async function createIndex() {
   const mappings = {
     _doc: {
       properties: {
+        id: { type: 'keyword' },
         title: { type: 'keyword' },
         name: {
           type: 'text',

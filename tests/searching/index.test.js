@@ -10,7 +10,7 @@ describe('Searching', () => {
     await expect(search(userId, searchTerm)).rejects.toThrow('Not found');
   });
 
-  test('Search forwared to elastic', async () => {
+  test('user specified search term', async () => {
     const userId = '101';
     const searchTerm = 'Tom Hanks';
     const preferences = {
@@ -23,4 +23,6 @@ describe('Searching', () => {
 
     expect(elastic.search).toBeCalledWith({ searchTerm, preferences });
   });
+
+  test('all users search based over preferences', async () => {});
 });
