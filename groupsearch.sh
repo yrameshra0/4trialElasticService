@@ -1,5 +1,37 @@
 #!/bin/sh
 req='{
+    "query": {
+        "bool": {
+            "should": [
+                {
+                    "match": {
+                        "name": "Sam Worthington"
+                    }
+                },
+                {
+                    "match": {
+                        "name": "Julie Lamm"
+                    }
+                },
+                {
+                    "match": {
+                        "name": "Giovanni Ribisi"
+                    }
+                },
+                {
+                    "match": {
+                        "name": "April Marie Thomas"
+                    }
+                },
+                {
+                    "match": {
+                        "originalLanguage": "English"
+                    }
+                }
+            ]
+        }
+    },
+    "size": 0,
     "aggs": {
         "101": {
             "terms": {
@@ -13,12 +45,8 @@ req='{
             "aggs": {
                 "allResluts": {
                     "top_hits": {
-                        "sort": [
-                            {
-                                "name.raw": {
-                                    "order": "asc"
-                                }
-                            }
+                        "_source": [
+                            "movieId"
                         ]
                     }
                 }
