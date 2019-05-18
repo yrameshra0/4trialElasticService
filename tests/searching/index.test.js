@@ -1,4 +1,4 @@
-const search = require('../../src/searching');
+const { search, allUsersPreferencesSearch } = require('../../src/searching');
 const elastic = require('../../src/elastic');
 
 jest.mock('../../src/elastic');
@@ -24,5 +24,14 @@ describe('Searching', () => {
     expect(elastic.search).toBeCalledWith({ searchTerm, preferences });
   });
 
-  test('all users search based over preferences', async () => {});
+  test('all users preferences search', async () => {});
+  test('all users preferences cached', async () => {
+    const mockedResults = { some: 'results' };
+    elastic.search.mockReturnValue(mockedResults);
+
+    await expect(allUsersPreferencesSearch()).resolves.toMatchObject(mockedResults);
+    await expect(allUsersPreferencesSearch()).resolves.toMatchObject(mockedResults);
+
+    expect(elastic.search).toBeCalledTimes(1);
+  });
 });

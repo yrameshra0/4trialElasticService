@@ -1,6 +1,8 @@
 const userPreferences = require('./user_preferences');
 const elastic = require('../elastic');
 
+let preferenceSearchResults;
+
 function findUserById(userId) {
   const userIdMatch = item => !!item[userId];
 
@@ -9,6 +11,7 @@ function findUserById(userId) {
 
   return user[userId];
 }
+
 async function search(userId, searchTerm) {
   const user = findUserById(userId);
   const movieSearch = {
@@ -22,4 +25,13 @@ async function search(userId, searchTerm) {
 
   return elastic.search(movieSearch);
 }
-module.exports = search;
+
+async function allUsersPreferencesSearch() {
+  if (preferenceSearchResults) return preferenceSearchResults;
+
+  preferenceSearchResults = await elastic.search();
+
+  return preferenceSearchResults;
+}
+
+module.exports = { search, allUsersPreferencesSearch };
