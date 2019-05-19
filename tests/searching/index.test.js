@@ -1,9 +1,16 @@
-const { search, allUsersPreferencesSearch } = require('../../src/searching');
+const { search, allUsersPreferencesSearch, clearPreferenceSearchResults } = require('../../src/searching');
 const elastic = require('../../src/elastic');
+const elasticUserPreferencesResponse = require('./__snapshots__/elasticUserPreferencesResponse');
+const userPreferencesActorsDirectorsQuery = require('./__snapshots__/userPreferencesActorsDirectorsQuery');
 
 jest.mock('../../src/elastic');
 
 describe('Searching', () => {
+  afterEach(() => {
+    jest.clearAllMocks();
+    clearPreferenceSearchResults();
+  });
+
   test('Incorrect user id requested', async () => {
     const userId = 'incorrect user';
     const searchTerm = 'not important';
@@ -24,10 +31,16 @@ describe('Searching', () => {
     expect(elastic.search).toBeCalledWith({ searchTerm, preferences });
   });
 
-  test('all users preferences search', async () => {});
+  test('all users preferences search', async () => {
+    elastic.search.mockReturnValue(Promise.resolve(elasticUserPreferencesResponse));
+    allUsersPreferencesSearch();
+
+    expect(elastic.search).toBeCalledWith(userPreferencesActorsDirectorsQuery);
+  });
+
   test('all users preferences cached', async () => {
     const mockedResults = { some: 'results' };
-    elastic.search.mockReturnValue(mockedResults);
+    elastic.search.mockReturnValue(Promise.resolve(mockedResults));
 
     await expect(allUsersPreferencesSearch()).resolves.toMatchObject(mockedResults);
     await expect(allUsersPreferencesSearch()).resolves.toMatchObject(mockedResults);
