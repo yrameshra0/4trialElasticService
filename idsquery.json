@@ -1,0 +1,28 @@
+{
+  "query": {
+    "ids": {
+      "values": ["movieId:19991", "movieId:19992", "movieId:19993"]
+    }
+  },
+  "size": 0,
+  "aggs": {
+    "101": {
+      "terms": {
+        "field": "id",
+        "include": ["movieId:19991", "movieId:19992", "movieId:19993"],
+        "size": 3
+      },
+      "aggs": {
+        "filterByLanguage": {
+          "terms": {
+            "field": "originalLanguage",
+            "include": ["de", "en"]
+          }
+        },
+        "aggs": {
+          "top_hits": {}
+        }
+      }
+    }
+  }
+}
