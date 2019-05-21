@@ -1,10 +1,23 @@
 {
+  "aggs": {
+    "100": {
+      "aggs": {
+        "hits": {
+          "top_hits": {}
+        }
+      },
+      "terms": {
+        "field": "name.raw",
+        "include": ["Sam Worthington", "Kate Winslet", "Emma Suárez", "Tom Hanks", "Steven Spielberg", "Martin Scorsese", "Pedro Almodóvar"]
+      }
+    }
+  },
   "query": {
     "bool": {
       "should": [
         {
           "match": {
-            "name": "Denzel Washington"
+            "name": "Sam Worthington"
           }
         },
         {
@@ -195,98 +208,5 @@
       ]
     }
   },
-  "size": 0,
-  "aggs": {
-    "100": {
-      "terms": {
-        "field": "name.raw",
-        "include": ["Denzel Washington", "Kate Winslet", "Emma Suárez", "Tom Hanks", "Steven Spielberg", "Martin Scorsese", "Pedro Almodóvar"]
-      },
-      "aggs": {
-        "allResluts": {
-          "top_hits": {
-            "_source": ["movieId"]
-          }
-        }
-      }
-    },
-    "101": {
-      "terms": {
-        "field": "name.raw",
-        "include": ["Denzel Washington", "Anne Hathaway", "Tom Hanks", "Guy Ritchie", "Quentin Tarantino"]
-      },
-      "aggs": {
-        "allResluts": {
-          "top_hits": {
-            "_source": ["movieId"]
-          }
-        }
-      }
-    },
-    "102": {
-      "terms": {
-        "field": "name.raw",
-        "include": ["Uma Thurman", "Charlize Theron", "John Travolta", "Quentin Tarantino"]
-      },
-      "aggs": {
-        "allResluts": {
-          "top_hits": {
-            "_source": ["movieId"]
-          }
-        }
-      }
-    },
-    "103": {
-      "terms": {
-        "field": "name.raw",
-        "include": ["Antonio Banderas", "Clint Eastwood", "Bruce Willis", "Stanley Kubrick", "Oliver Stone"]
-      },
-      "aggs": {
-        "allResluts": {
-          "top_hits": {
-            "_source": ["movieId"]
-          }
-        }
-      }
-    },
-    "104": {
-      "terms": {
-        "field": "name.raw",
-        "include": ["Anthony Hopkins", "Adam Sandler", "Bruce Willis", "Nora Ephron", "Oliver Stone"]
-      },
-      "aggs": {
-        "allResluts": {
-          "top_hits": {
-            "_source": ["movieId"]
-          }
-        }
-      }
-    },
-    "105": {
-      "terms": {
-        "field": "name.raw",
-        "include": ["Anthony Hopkins", "Bárbara Goenaga", "Tenoch Huerta", "Amat Escalante", "Robert Rodriguez"]
-      },
-      "aggs": {
-        "allResluts": {
-          "top_hits": {
-            "_source": ["movieId"]
-          }
-        }
-      }
-    },
-    "106": {
-      "terms": {
-        "field": "name.raw",
-        "include": ["Brad Pitt", "Robert Downey Jr.", "Jennifer Lawrence", "Johnny Depp", "Steven Spielberg", "Martin Scorsese", "Ridley Scott"]
-      },
-      "aggs": {
-        "allResluts": {
-          "top_hits": {
-            "_source": ["movieId"]
-          }
-        }
-      }
-    }
-  }
+  "size": 0
 }

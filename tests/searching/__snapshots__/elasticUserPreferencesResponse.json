@@ -1,52 +1,332 @@
 {
-    "took": 291,
-    "timed_out": false,
-    "_shards": {
-        "total": 5,
-        "successful": 5,
-        "skipped": 0,
-        "failed": 0
-    },
-    "hits": {
-        "total": 7,
-        "max_score": 0,
-        "hits": []
-    },
-    "aggregations": {
-        "100": {
-            "doc_count_error_upper_bound": 0,
-            "sum_other_doc_count": 0,
-            "buckets": []
-        },
-        "101": {
-            "doc_count_error_upper_bound": 0,
-            "sum_other_doc_count": 0,
-            "buckets": []
-        },
-        "102": {
-            "doc_count_error_upper_bound": 0,
-            "sum_other_doc_count": 0,
-            "buckets": []
-        },
-        "103": {
-            "doc_count_error_upper_bound": 0,
-            "sum_other_doc_count": 0,
-            "buckets": []
-        },
-        "104": {
-            "doc_count_error_upper_bound": 0,
-            "sum_other_doc_count": 0,
-            "buckets": []
-        },
-        "105": {
-            "doc_count_error_upper_bound": 0,
-            "sum_other_doc_count": 0,
-            "buckets": []
-        },
-        "106": {
-            "doc_count_error_upper_bound": 0,
-            "sum_other_doc_count": 0,
-            "buckets": []
+  "took": 31,
+  "timed_out": false,
+  "_shards": {
+    "total": 5,
+    "successful": 5,
+    "skipped": 0,
+    "failed": 0
+  },
+  "hits": {
+    "total": 3,
+    "max_score": 0,
+    "hits": []
+  },
+  "aggregations": {
+    "100": {
+      "doc_count_error_upper_bound": 0,
+      "sum_other_doc_count": 0,
+      "buckets": [
+        {
+          "key": "Sam Worthington",
+          "doc_count": 3,
+          "allResluts": {
+            "hits": {
+              "total": 3,
+              "max_score": 0.5753642,
+              "hits": [
+                {
+                  "_index": "movies",
+                  "_type": "_doc",
+                  "_id": "movieId:19993::castId:242",
+                  "_score": 0.5753642,
+                  "_source": {
+                    "movieId": 19993
+                  }
+                },
+                {
+                  "_index": "movies",
+                  "_type": "_doc",
+                  "_id": "movieId:19991::castId:242",
+                  "_score": 0.36464313,
+                  "_source": {
+                    "movieId": 19991
+                  }
+                },
+                {
+                  "_index": "movies",
+                  "_type": "_doc",
+                  "_id": "movieId:19992::castId:242",
+                  "_score": 0.36464313,
+                  "_source": {
+                    "movieId": 19992
+                  }
+                }
+              ]
+            }
+          }
         }
+      ]
+    },
+    "101": {
+      "doc_count_error_upper_bound": 0,
+      "sum_other_doc_count": 0,
+      "buckets": [
+        {
+          "key": "Sam Worthington",
+          "doc_count": 3,
+          "allResluts": {
+            "hits": {
+              "total": 3,
+              "max_score": 0.5753642,
+              "hits": [
+                {
+                  "_index": "movies",
+                  "_type": "_doc",
+                  "_id": "movieId:19993::castId:242",
+                  "_score": 0.5753642,
+                  "_source": {
+                    "movieId": 19993
+                  }
+                },
+                {
+                  "_index": "movies",
+                  "_type": "_doc",
+                  "_id": "movieId:19991::castId:242",
+                  "_score": 0.36464313,
+                  "_source": {
+                    "movieId": 19991
+                  }
+                },
+                {
+                  "_index": "movies",
+                  "_type": "_doc",
+                  "_id": "movieId:19992::castId:242",
+                  "_score": 0.36464313,
+                  "_source": {
+                    "movieId": 19992
+                  }
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "102": {
+      "doc_count_error_upper_bound": 0,
+      "sum_other_doc_count": 0,
+      "buckets": [
+        {
+          "key": "Sam Worthington",
+          "doc_count": 3,
+          "allResluts": {
+            "hits": {
+              "total": 3,
+              "max_score": 0.5753642,
+              "hits": [
+                {
+                  "_index": "movies",
+                  "_type": "_doc",
+                  "_id": "movieId:19993::castId:242",
+                  "_score": 0.5753642,
+                  "_source": {
+                    "movieId": 19993
+                  }
+                },
+                {
+                  "_index": "movies",
+                  "_type": "_doc",
+                  "_id": "movieId:19991::castId:242",
+                  "_score": 0.36464313,
+                  "_source": {
+                    "movieId": 19991
+                  }
+                },
+                {
+                  "_index": "movies",
+                  "_type": "_doc",
+                  "_id": "movieId:19992::castId:242",
+                  "_score": 0.36464313,
+                  "_source": {
+                    "movieId": 19992
+                  }
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "103": {
+      "doc_count_error_upper_bound": 0,
+      "sum_other_doc_count": 0,
+      "buckets": [
+        {
+          "key": "Sam Worthington",
+          "doc_count": 3,
+          "allResluts": {
+            "hits": {
+              "total": 3,
+              "max_score": 0.5753642,
+              "hits": [
+                {
+                  "_index": "movies",
+                  "_type": "_doc",
+                  "_id": "movieId:19993::castId:242",
+                  "_score": 0.5753642,
+                  "_source": {
+                    "movieId": 19993
+                  }
+                },
+                {
+                  "_index": "movies",
+                  "_type": "_doc",
+                  "_id": "movieId:19991::castId:242",
+                  "_score": 0.36464313,
+                  "_source": {
+                    "movieId": 19991
+                  }
+                },
+                {
+                  "_index": "movies",
+                  "_type": "_doc",
+                  "_id": "movieId:19992::castId:242",
+                  "_score": 0.36464313,
+                  "_source": {
+                    "movieId": 19992
+                  }
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "104": {
+      "doc_count_error_upper_bound": 0,
+      "sum_other_doc_count": 0,
+      "buckets": [
+        {
+          "key": "Sam Worthington",
+          "doc_count": 3,
+          "allResluts": {
+            "hits": {
+              "total": 3,
+              "max_score": 0.5753642,
+              "hits": [
+                {
+                  "_index": "movies",
+                  "_type": "_doc",
+                  "_id": "movieId:19993::castId:242",
+                  "_score": 0.5753642,
+                  "_source": {
+                    "movieId": 19993
+                  }
+                },
+                {
+                  "_index": "movies",
+                  "_type": "_doc",
+                  "_id": "movieId:19991::castId:242",
+                  "_score": 0.36464313,
+                  "_source": {
+                    "movieId": 19991
+                  }
+                },
+                {
+                  "_index": "movies",
+                  "_type": "_doc",
+                  "_id": "movieId:19992::castId:242",
+                  "_score": 0.36464313,
+                  "_source": {
+                    "movieId": 19992
+                  }
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "105": {
+      "doc_count_error_upper_bound": 0,
+      "sum_other_doc_count": 0,
+      "buckets": [
+        {
+          "key": "Sam Worthington",
+          "doc_count": 3,
+          "allResluts": {
+            "hits": {
+              "total": 3,
+              "max_score": 0.5753642,
+              "hits": [
+                {
+                  "_index": "movies",
+                  "_type": "_doc",
+                  "_id": "movieId:19993::castId:242",
+                  "_score": 0.5753642,
+                  "_source": {
+                    "movieId": 19993
+                  }
+                },
+                {
+                  "_index": "movies",
+                  "_type": "_doc",
+                  "_id": "movieId:19991::castId:242",
+                  "_score": 0.36464313,
+                  "_source": {
+                    "movieId": 19991
+                  }
+                },
+                {
+                  "_index": "movies",
+                  "_type": "_doc",
+                  "_id": "movieId:19992::castId:242",
+                  "_score": 0.36464313,
+                  "_source": {
+                    "movieId": 19992
+                  }
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "106": {
+      "doc_count_error_upper_bound": 0,
+      "sum_other_doc_count": 0,
+      "buckets": [
+        {
+          "key": "Sam Worthington",
+          "doc_count": 3,
+          "allResluts": {
+            "hits": {
+              "total": 3,
+              "max_score": 0.5753642,
+              "hits": [
+                {
+                  "_index": "movies",
+                  "_type": "_doc",
+                  "_id": "movieId:19993::castId:242",
+                  "_score": 0.5753642,
+                  "_source": {
+                    "movieId": 19993
+                  }
+                },
+                {
+                  "_index": "movies",
+                  "_type": "_doc",
+                  "_id": "movieId:19991::castId:242",
+                  "_score": 0.36464313,
+                  "_source": {
+                    "movieId": 19991
+                  }
+                },
+                {
+                  "_index": "movies",
+                  "_type": "_doc",
+                  "_id": "movieId:19992::castId:242",
+                  "_score": 0.36464313,
+                  "_source": {
+                    "movieId": 19992
+                  }
+                }
+              ]
+            }
+          }
+        }
+      ]
     }
+  }
 }

@@ -2,6 +2,9 @@ const { search, allUsersPreferencesSearch, clearPreferenceSearchResults } = requ
 const elastic = require('../../src/elastic');
 const elasticUserPreferencesResponse = require('./__snapshots__/elasticUserPreferencesResponse');
 const userPreferencesActorsDirectorsQuery = require('./__snapshots__/userPreferencesActorsDirectorsQuery');
+const originalLanguageQuery = require('./__snapshots__/originalLanguageQuery');
+const elasticOriginalLanguageResponse = require('./__snapshots__/elasticOriginalLanguageResponse');
+const userPreferencesResponse = require('./__snapshots__/userPreferedMovies');
 
 jest.mock('../../src/elastic');
 
@@ -32,19 +35,28 @@ describe('Searching', () => {
   });
 
   test('all users preferences search', async () => {
-    elastic.search.mockReturnValue(Promise.resolve(elasticUserPreferencesResponse));
-    allUsersPreferencesSearch();
+    /* prettier-ignore */
+    elastic.search
+    .mockReturnValueOnce(Promise.resolve(elasticUserPreferencesResponse))
+    .mockReturnValueOnce(Promise.resolve(elasticOriginalLanguageResponse));
 
-    expect(elastic.search).toBeCalledWith(userPreferencesActorsDirectorsQuery);
+    const results = await allUsersPreferencesSearch();
+
+    expect(elastic.search.mock.calls.length).toBe(2);
+    expect(elastic.search.mock.calls[0][0]).toMatchObject(userPreferencesActorsDirectorsQuery);
+    expect(elastic.search.mock.calls[1][0]).toMatchObject(originalLanguageQuery);
+    expect(results).toMatchObject(userPreferencesResponse);
   });
 
   test('all users preferences cached', async () => {
-    const mockedResults = { some: 'results' };
-    elastic.search.mockReturnValue(Promise.resolve(mockedResults));
+    /* prettier-ignore */
+    elastic.search
+      .mockReturnValueOnce(Promise.resolve(elasticUserPreferencesResponse))
+      .mockReturnValueOnce(Promise.resolve(elasticOriginalLanguageResponse));
 
-    await expect(allUsersPreferencesSearch()).resolves.toMatchObject(mockedResults);
-    await expect(allUsersPreferencesSearch()).resolves.toMatchObject(mockedResults);
+    await expect(allUsersPreferencesSearch()).resolves.toMatchObject(userPreferencesResponse);
+    await expect(allUsersPreferencesSearch()).resolves.toMatchObject(userPreferencesResponse);
 
-    expect(elastic.search).toBeCalledTimes(1);
+    expect(elastic.search).toBeCalledTimes(2);
   });
 });

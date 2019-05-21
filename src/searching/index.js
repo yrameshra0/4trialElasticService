@@ -72,10 +72,96 @@ const userPreferencesQueryGenerator = () => {
   };
 };
 
+function originalLanguageQueryGenerator(response) {
+  const { aggregations } = response;
+  const userAggs = Object.keys(aggregations);
+
+  function movieIdsForUser(userId) {
+    const { hits } = aggregations[userId].buckets[0].allResluts.hits;
+    /* eslint-disable no-underscore-dangle */
+    return hits.map(val => val._source.movieId).map(val => `movieId:${val}`);
+  }
+
+  function uniqieMovieIds() {
+    return userAggs
+      .map(movieIdsForUser)
+      .reduce((acc, val) => [...acc, ...val], [])
+      .reduce((acc, val) => {
+        if (!acc.includes(val)) acc.push(val);
+
+        return acc;
+      }, []);
+  }
+
+  const titleAggs = () => ({
+    aggs: {
+      top_hits: {
+        _source: ['title'],
+      },
+    },
+  });
+
+  const idsGroups = userId => ({
+    aggs: {
+      idsGroups: {
+        terms: {
+          field: 'id',
+          include: movieIdsForUser(userId),
+        },
+      },
+      ...titleAggs(),
+    },
+  });
+
+  return {
+    query: {
+      ids: {
+        values: uniqieMovieIds(),
+      },
+    },
+    size: 0,
+    aggs: userAggs
+      .map(userId => ({
+        [userId]: {
+          terms: {
+            field: 'originalLanguage',
+            include: findUserById(userId)
+              .preferred_languages.map(val => val.substring(0, 2))
+              .map(val => val.toLowerCase()),
+          },
+          ...idsGroups(userId),
+        },
+      }))
+      .reduce((acc, val) => ({ ...acc, ...val }), {}),
+  };
+}
+
+function userPreferenceParser(response) {
+  const { aggregations } = response;
+  const userIds = Object.keys(aggregations);
+
+  return userIds.map(user => {
+    const movies = aggregations[user].buckets
+      .reduce((acc, val) => {
+        const { hits } = val.aggs.hits;
+        /* eslint-disable no-underscore-dangle */
+        const titles = hits.map(movie => movie._source.title);
+        return [...acc, ...titles];
+      }, [])
+      .sort();
+    return {
+      user,
+      movies,
+    };
+  });
+}
+
 async function allUsersPreferencesSearch() {
   if (preferenceSearchResults) return preferenceSearchResults;
 
-  preferenceSearchResults = await elastic.search(userPreferencesQueryGenerator());
+  const allPreferencesFilter = await elastic.search(userPreferencesQueryGenerator());
+  const filterByOriginalLanguage = await elastic.search(originalLanguageQueryGenerator(allPreferencesFilter));
+  preferenceSearchResults = userPreferenceParser(filterByOriginalLanguage);
 
   return preferenceSearchResults;
 }

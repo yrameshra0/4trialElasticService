@@ -1,0 +1,30 @@
+[
+  {
+    "user": "100",
+    "movies": ["Avatar", "Bvatar", "Zvatar"]
+  },
+  {
+    "user": "101",
+    "movies": ["Avatar", "Zvatar"]
+  },
+  {
+    "user": "102",
+    "movies": ["Avatar", "Zvatar"]
+  },
+  {
+    "user": "103",
+    "movies": ["Avatar", "Zvatar"]
+  },
+  {
+    "user": "104",
+    "movies": ["Avatar", "Zvatar"]
+  },
+  {
+    "user": "105",
+    "movies": []
+  },
+  {
+    "user": "106",
+    "movies": ["Avatar", "Zvatar"]
+  }
+]

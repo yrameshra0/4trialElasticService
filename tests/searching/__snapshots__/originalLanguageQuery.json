@@ -4,201 +4,139 @@
       "aggs": {
         "aggs": {
           "top_hits": {
-            "_source": [
-              "title"
-            ]
+            "_source": ["title"]
           }
         },
         "idsGroups": {
           "terms": {
             "field": "id",
-            "include": [
-              "movieId:19993",
-              "movieId:19991",
-              "movieId:19992"
-            ]
+            "include": ["movieId:19993", "movieId:19991", "movieId:19992"]
           }
         }
       },
       "terms": {
         "field": "originalLanguage",
-        "include": [
-          "en",
-          "de"
-        ]
+        "include": ["en", "sp"]
       }
     },
     "101": {
       "aggs": {
         "aggs": {
           "top_hits": {
-            "_source": [
-              "title"
-            ]
+            "_source": ["title"]
           }
         },
         "idsGroups": {
           "terms": {
             "field": "id",
-            "include": [
-              "movieId:19993",
-              "movieId:19991",
-              "movieId:19992"
-            ]
+            "include": ["movieId:19993", "movieId:19991", "movieId:19992"]
           }
         }
       },
       "terms": {
         "field": "originalLanguage",
-        "include": [
-          "en"
-        ]
+        "include": ["en"]
       }
     },
     "102": {
       "aggs": {
         "aggs": {
           "top_hits": {
-            "_source": [
-              "title"
-            ]
+            "_source": ["title"]
           }
         },
         "idsGroups": {
           "terms": {
             "field": "id",
-            "include": [
-              "movieId:19993",
-              "movieId:19991",
-              "movieId:19992"
-            ]
+            "include": ["movieId:19993", "movieId:19991", "movieId:19992"]
           }
         }
       },
       "terms": {
         "field": "originalLanguage",
-        "include": [
-          "en"
-        ]
+        "include": ["en"]
       }
     },
     "103": {
       "aggs": {
         "aggs": {
           "top_hits": {
-            "_source": [
-              "title"
-            ]
+            "_source": ["title"]
           }
         },
         "idsGroups": {
           "terms": {
             "field": "id",
-            "include": [
-              "movieId:19993",
-              "movieId:19991",
-              "movieId:19992"
-            ]
+            "include": ["movieId:19993", "movieId:19991", "movieId:19992"]
           }
         }
       },
       "terms": {
         "field": "originalLanguage",
-        "include": [
-          "en"
-        ]
+        "include": ["en"]
       }
     },
     "104": {
       "aggs": {
         "aggs": {
           "top_hits": {
-            "_source": [
-              "title"
-            ]
+            "_source": ["title"]
           }
         },
         "idsGroups": {
           "terms": {
             "field": "id",
-            "include": [
-              "movieId:19993",
-              "movieId:19991",
-              "movieId:19992"
-            ]
+            "include": ["movieId:19993", "movieId:19991", "movieId:19992"]
           }
         }
       },
       "terms": {
         "field": "originalLanguage",
-        "include": [
-          "en"
-        ]
+        "include": ["en"]
       }
     },
     "105": {
       "aggs": {
         "aggs": {
           "top_hits": {
-            "_source": [
-              "title"
-            ]
+            "_source": ["title"]
           }
         },
         "idsGroups": {
           "terms": {
             "field": "id",
-            "include": [
-              "movieId:19993",
-              "movieId:19991",
-              "movieId:19992"
-            ]
+            "include": ["movieId:19993", "movieId:19991", "movieId:19992"]
           }
         }
       },
       "terms": {
         "field": "originalLanguage",
-        "include": [
-          "sp"
-        ]
+        "include": ["sp"]
       }
     },
     "106": {
       "aggs": {
         "aggs": {
           "top_hits": {
-            "_source": [
-              "title"
-            ]
+            "_source": ["title"]
           }
         },
         "idsGroups": {
           "terms": {
             "field": "id",
-            "include": [
-              "movieId:19993",
-              "movieId:19991",
-              "movieId:19992"
-            ]
+            "include": ["movieId:19993", "movieId:19991", "movieId:19992"]
           }
         }
       },
       "terms": {
         "field": "originalLanguage",
-        "include": [
-          "en",
-          "sp"
-        ]
+        "include": ["en", "sp"]
       }
     }
   },
   "query": {
     "ids": {
-      "values": [
-        "movieId:19993",
-        "movieId:19991",
-        "movieId:19992"
-      ]
+      "values": ["movieId:19993", "movieId:19991", "movieId:19992"]
     }
   },
   "size": 0
