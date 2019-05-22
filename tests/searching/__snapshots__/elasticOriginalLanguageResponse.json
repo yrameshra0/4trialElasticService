@@ -1,5 +1,5 @@
 {
-  "took": 5,
+  "took": 12,
   "timed_out": false,
   "_shards": {
     "total": 5,
@@ -18,25 +18,21 @@
       "sum_other_doc_count": 0,
       "buckets": [
         {
-          "key": "en",
-          "doc_count": 2,
-          "idsGroups": {
+          "key": "movieId:19991",
+          "doc_count": 1,
+          "originalLanguageFilter": {
             "doc_count_error_upper_bound": 0,
             "sum_other_doc_count": 0,
             "buckets": [
               {
-                "key": "movieId:19991",
-                "doc_count": 1
-              },
-              {
-                "key": "movieId:19993",
+                "key": "en",
                 "doc_count": 1
               }
             ]
           },
           "aggs": {
             "hits": {
-              "total": 2,
+              "total": 1,
               "max_score": 1,
               "hits": [
                 {
@@ -47,29 +43,20 @@
                   "_source": {
                     "title": "Avatar"
                   }
-                },
-                {
-                  "_index": "movies",
-                  "_type": "_doc",
-                  "_id": "movieId:19993",
-                  "_score": 1,
-                  "_source": {
-                    "title": "Zvatar"
-                  }
                 }
               ]
             }
           }
         },
         {
-          "key": "de",
+          "key": "movieId:19992",
           "doc_count": 1,
-          "idsGroups": {
+          "originalLanguageFilter": {
             "doc_count_error_upper_bound": 0,
             "sum_other_doc_count": 0,
             "buckets": [
               {
-                "key": "movieId:19992",
+                "key": "de",
                 "doc_count": 1
               }
             ]
@@ -91,6 +78,37 @@
               ]
             }
           }
+        },
+        {
+          "key": "movieId:19993",
+          "doc_count": 1,
+          "originalLanguageFilter": {
+            "doc_count_error_upper_bound": 0,
+            "sum_other_doc_count": 0,
+            "buckets": [
+              {
+                "key": "en",
+                "doc_count": 1
+              }
+            ]
+          },
+          "aggs": {
+            "hits": {
+              "total": 1,
+              "max_score": 1,
+              "hits": [
+                {
+                  "_index": "movies",
+                  "_type": "_doc",
+                  "_id": "movieId:19993",
+                  "_score": 1,
+                  "_source": {
+                    "title": "Zvatar"
+                  }
+                }
+              ]
+            }
+          }
         }
       ]
     },
@@ -99,25 +117,21 @@
       "sum_other_doc_count": 0,
       "buckets": [
         {
-          "key": "en",
-          "doc_count": 2,
-          "idsGroups": {
+          "key": "movieId:19991",
+          "doc_count": 1,
+          "originalLanguageFilter": {
             "doc_count_error_upper_bound": 0,
             "sum_other_doc_count": 0,
             "buckets": [
               {
-                "key": "movieId:19991",
-                "doc_count": 1
-              },
-              {
-                "key": "movieId:19993",
+                "key": "en",
                 "doc_count": 1
               }
             ]
           },
           "aggs": {
             "hits": {
-              "total": 2,
+              "total": 1,
               "max_score": 1,
               "hits": [
                 {
@@ -128,7 +142,55 @@
                   "_source": {
                     "title": "Avatar"
                   }
-                },
+                }
+              ]
+            }
+          }
+        },
+        {
+          "key": "movieId:19992",
+          "doc_count": 1,
+          "originalLanguageFilter": {
+            "doc_count_error_upper_bound": 0,
+            "sum_other_doc_count": 0,
+            "buckets": []
+          },
+          "aggs": {
+            "hits": {
+              "total": 1,
+              "max_score": 1,
+              "hits": [
+                {
+                  "_index": "movies",
+                  "_type": "_doc",
+                  "_id": "movieId:19992",
+                  "_score": 1,
+                  "_source": {
+                    "title": "Bvatar"
+                  }
+                }
+              ]
+            }
+          }
+        },
+        {
+          "key": "movieId:19993",
+          "doc_count": 1,
+          "originalLanguageFilter": {
+            "doc_count_error_upper_bound": 0,
+            "sum_other_doc_count": 0,
+            "buckets": [
+              {
+                "key": "en",
+                "doc_count": 1
+              }
+            ]
+          },
+          "aggs": {
+            "hits": {
+              "total": 1,
+              "max_score": 1,
+              "hits": [
                 {
                   "_index": "movies",
                   "_type": "_doc",
@@ -149,25 +211,21 @@
       "sum_other_doc_count": 0,
       "buckets": [
         {
-          "key": "en",
-          "doc_count": 2,
-          "idsGroups": {
+          "key": "movieId:19991",
+          "doc_count": 1,
+          "originalLanguageFilter": {
             "doc_count_error_upper_bound": 0,
             "sum_other_doc_count": 0,
             "buckets": [
               {
-                "key": "movieId:19991",
-                "doc_count": 1
-              },
-              {
-                "key": "movieId:19993",
+                "key": "en",
                 "doc_count": 1
               }
             ]
           },
           "aggs": {
             "hits": {
-              "total": 2,
+              "total": 1,
               "max_score": 1,
               "hits": [
                 {
@@ -178,7 +236,55 @@
                   "_source": {
                     "title": "Avatar"
                   }
-                },
+                }
+              ]
+            }
+          }
+        },
+        {
+          "key": "movieId:19992",
+          "doc_count": 1,
+          "originalLanguageFilter": {
+            "doc_count_error_upper_bound": 0,
+            "sum_other_doc_count": 0,
+            "buckets": []
+          },
+          "aggs": {
+            "hits": {
+              "total": 1,
+              "max_score": 1,
+              "hits": [
+                {
+                  "_index": "movies",
+                  "_type": "_doc",
+                  "_id": "movieId:19992",
+                  "_score": 1,
+                  "_source": {
+                    "title": "Bvatar"
+                  }
+                }
+              ]
+            }
+          }
+        },
+        {
+          "key": "movieId:19993",
+          "doc_count": 1,
+          "originalLanguageFilter": {
+            "doc_count_error_upper_bound": 0,
+            "sum_other_doc_count": 0,
+            "buckets": [
+              {
+                "key": "en",
+                "doc_count": 1
+              }
+            ]
+          },
+          "aggs": {
+            "hits": {
+              "total": 1,
+              "max_score": 1,
+              "hits": [
                 {
                   "_index": "movies",
                   "_type": "_doc",
@@ -199,25 +305,21 @@
       "sum_other_doc_count": 0,
       "buckets": [
         {
-          "key": "en",
-          "doc_count": 2,
-          "idsGroups": {
+          "key": "movieId:19991",
+          "doc_count": 1,
+          "originalLanguageFilter": {
             "doc_count_error_upper_bound": 0,
             "sum_other_doc_count": 0,
             "buckets": [
               {
-                "key": "movieId:19991",
-                "doc_count": 1
-              },
-              {
-                "key": "movieId:19993",
+                "key": "en",
                 "doc_count": 1
               }
             ]
           },
           "aggs": {
             "hits": {
-              "total": 2,
+              "total": 1,
               "max_score": 1,
               "hits": [
                 {
@@ -228,7 +330,55 @@
                   "_source": {
                     "title": "Avatar"
                   }
-                },
+                }
+              ]
+            }
+          }
+        },
+        {
+          "key": "movieId:19992",
+          "doc_count": 1,
+          "originalLanguageFilter": {
+            "doc_count_error_upper_bound": 0,
+            "sum_other_doc_count": 0,
+            "buckets": []
+          },
+          "aggs": {
+            "hits": {
+              "total": 1,
+              "max_score": 1,
+              "hits": [
+                {
+                  "_index": "movies",
+                  "_type": "_doc",
+                  "_id": "movieId:19992",
+                  "_score": 1,
+                  "_source": {
+                    "title": "Bvatar"
+                  }
+                }
+              ]
+            }
+          }
+        },
+        {
+          "key": "movieId:19993",
+          "doc_count": 1,
+          "originalLanguageFilter": {
+            "doc_count_error_upper_bound": 0,
+            "sum_other_doc_count": 0,
+            "buckets": [
+              {
+                "key": "en",
+                "doc_count": 1
+              }
+            ]
+          },
+          "aggs": {
+            "hits": {
+              "total": 1,
+              "max_score": 1,
+              "hits": [
                 {
                   "_index": "movies",
                   "_type": "_doc",
@@ -249,25 +399,21 @@
       "sum_other_doc_count": 0,
       "buckets": [
         {
-          "key": "en",
-          "doc_count": 2,
-          "idsGroups": {
+          "key": "movieId:19991",
+          "doc_count": 1,
+          "originalLanguageFilter": {
             "doc_count_error_upper_bound": 0,
             "sum_other_doc_count": 0,
             "buckets": [
               {
-                "key": "movieId:19991",
-                "doc_count": 1
-              },
-              {
-                "key": "movieId:19993",
+                "key": "en",
                 "doc_count": 1
               }
             ]
           },
           "aggs": {
             "hits": {
-              "total": 2,
+              "total": 1,
               "max_score": 1,
               "hits": [
                 {
@@ -278,7 +424,55 @@
                   "_source": {
                     "title": "Avatar"
                   }
-                },
+                }
+              ]
+            }
+          }
+        },
+        {
+          "key": "movieId:19992",
+          "doc_count": 1,
+          "originalLanguageFilter": {
+            "doc_count_error_upper_bound": 0,
+            "sum_other_doc_count": 0,
+            "buckets": []
+          },
+          "aggs": {
+            "hits": {
+              "total": 1,
+              "max_score": 1,
+              "hits": [
+                {
+                  "_index": "movies",
+                  "_type": "_doc",
+                  "_id": "movieId:19992",
+                  "_score": 1,
+                  "_source": {
+                    "title": "Bvatar"
+                  }
+                }
+              ]
+            }
+          }
+        },
+        {
+          "key": "movieId:19993",
+          "doc_count": 1,
+          "originalLanguageFilter": {
+            "doc_count_error_upper_bound": 0,
+            "sum_other_doc_count": 0,
+            "buckets": [
+              {
+                "key": "en",
+                "doc_count": 1
+              }
+            ]
+          },
+          "aggs": {
+            "hits": {
+              "total": 1,
+              "max_score": 1,
+              "hits": [
                 {
                   "_index": "movies",
                   "_type": "_doc",
@@ -297,32 +491,18 @@
     "105": {
       "doc_count_error_upper_bound": 0,
       "sum_other_doc_count": 0,
-      "buckets": []
-    },
-    "106": {
-      "doc_count_error_upper_bound": 0,
-      "sum_other_doc_count": 0,
       "buckets": [
         {
-          "key": "en",
-          "doc_count": 2,
-          "idsGroups": {
+          "key": "movieId:19991",
+          "doc_count": 1,
+          "originalLanguageFilter": {
             "doc_count_error_upper_bound": 0,
             "sum_other_doc_count": 0,
-            "buckets": [
-              {
-                "key": "movieId:19991",
-                "doc_count": 1
-              },
-              {
-                "key": "movieId:19993",
-                "doc_count": 1
-              }
-            ]
+            "buckets": []
           },
           "aggs": {
             "hits": {
-              "total": 2,
+              "total": 1,
               "max_score": 1,
               "hits": [
                 {
@@ -333,7 +513,144 @@
                   "_source": {
                     "title": "Avatar"
                   }
-                },
+                }
+              ]
+            }
+          }
+        },
+        {
+          "key": "movieId:19992",
+          "doc_count": 1,
+          "originalLanguageFilter": {
+            "doc_count_error_upper_bound": 0,
+            "sum_other_doc_count": 0,
+            "buckets": []
+          },
+          "aggs": {
+            "hits": {
+              "total": 1,
+              "max_score": 1,
+              "hits": [
+                {
+                  "_index": "movies",
+                  "_type": "_doc",
+                  "_id": "movieId:19992",
+                  "_score": 1,
+                  "_source": {
+                    "title": "Bvatar"
+                  }
+                }
+              ]
+            }
+          }
+        },
+        {
+          "key": "movieId:19993",
+          "doc_count": 1,
+          "originalLanguageFilter": {
+            "doc_count_error_upper_bound": 0,
+            "sum_other_doc_count": 0,
+            "buckets": []
+          },
+          "aggs": {
+            "hits": {
+              "total": 1,
+              "max_score": 1,
+              "hits": [
+                {
+                  "_index": "movies",
+                  "_type": "_doc",
+                  "_id": "movieId:19993",
+                  "_score": 1,
+                  "_source": {
+                    "title": "Zvatar"
+                  }
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "106": {
+      "doc_count_error_upper_bound": 0,
+      "sum_other_doc_count": 0,
+      "buckets": [
+        {
+          "key": "movieId:19991",
+          "doc_count": 1,
+          "originalLanguageFilter": {
+            "doc_count_error_upper_bound": 0,
+            "sum_other_doc_count": 0,
+            "buckets": [
+              {
+                "key": "en",
+                "doc_count": 1
+              }
+            ]
+          },
+          "aggs": {
+            "hits": {
+              "total": 1,
+              "max_score": 1,
+              "hits": [
+                {
+                  "_index": "movies",
+                  "_type": "_doc",
+                  "_id": "movieId:19991",
+                  "_score": 1,
+                  "_source": {
+                    "title": "Avatar"
+                  }
+                }
+              ]
+            }
+          }
+        },
+        {
+          "key": "movieId:19992",
+          "doc_count": 1,
+          "originalLanguageFilter": {
+            "doc_count_error_upper_bound": 0,
+            "sum_other_doc_count": 0,
+            "buckets": []
+          },
+          "aggs": {
+            "hits": {
+              "total": 1,
+              "max_score": 1,
+              "hits": [
+                {
+                  "_index": "movies",
+                  "_type": "_doc",
+                  "_id": "movieId:19992",
+                  "_score": 1,
+                  "_source": {
+                    "title": "Bvatar"
+                  }
+                }
+              ]
+            }
+          }
+        },
+        {
+          "key": "movieId:19993",
+          "doc_count": 1,
+          "originalLanguageFilter": {
+            "doc_count_error_upper_bound": 0,
+            "sum_other_doc_count": 0,
+            "buckets": [
+              {
+                "key": "en",
+                "doc_count": 1
+              }
+            ]
+          },
+          "aggs": {
+            "hits": {
+              "total": 1,
+              "max_score": 1,
+              "hits": [
                 {
                   "_index": "movies",
                   "_type": "_doc",

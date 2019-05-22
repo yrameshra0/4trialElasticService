@@ -97,16 +97,19 @@ function originalLanguageQueryGenerator(response) {
     aggs: {
       top_hits: {
         _source: ['title'],
+        size: 10,
       },
     },
   });
 
   const idsGroups = userId => ({
     aggs: {
-      idsGroups: {
+      originalLanguageFilter: {
         terms: {
-          field: 'id',
-          include: movieIdsForUser(userId),
+          field: 'originalLanguage',
+          include: findUserById(userId)
+            .preferred_languages.map(val => val.substring(0, 2))
+            .map(val => val.toLowerCase()),
         },
       },
       ...titleAggs(),
@@ -124,10 +127,8 @@ function originalLanguageQueryGenerator(response) {
       .map(userId => ({
         [userId]: {
           terms: {
-            field: 'originalLanguage',
-            include: findUserById(userId)
-              .preferred_languages.map(val => val.substring(0, 2))
-              .map(val => val.toLowerCase()),
+            field: 'id',
+            include: movieIdsForUser(userId),
           },
           ...idsGroups(userId),
         },
@@ -142,13 +143,17 @@ function userPreferenceParser(response) {
 
   return userIds.map(user => {
     const movies = aggregations[user].buckets
+      /*
+       All the movies are sent back by elastic with filter bucket indicating if it indeed
+       successfully bypassed the filtering
+       */
+      .filter(bucketVal => bucketVal.originalLanguageFilter.buckets.length > 0)
       .reduce((acc, val) => {
         const { hits } = val.aggs.hits;
         /* eslint-disable no-underscore-dangle */
         const titles = hits.map(movie => movie._source.title);
         return [...acc, ...titles];
-      }, [])
-      .sort();
+      }, []);
     return {
       user,
       movies,

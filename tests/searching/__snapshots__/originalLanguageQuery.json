@@ -4,133 +4,140 @@
       "aggs": {
         "aggs": {
           "top_hits": {
-            "_source": ["title"]
+            "_source": ["title"],
+            "size": 10
           }
         },
-        "idsGroups": {
+        "originalLanguageFilter": {
           "terms": {
-            "field": "id",
-            "include": ["movieId:19993", "movieId:19991", "movieId:19992"]
+            "field": "originalLanguage",
+            "include": ["en", "sp"]
           }
         }
       },
       "terms": {
-        "field": "originalLanguage",
-        "include": ["en", "sp"]
+        "field": "id",
+        "include": ["movieId:19993", "movieId:19991", "movieId:19992"]
       }
     },
     "101": {
       "aggs": {
         "aggs": {
           "top_hits": {
-            "_source": ["title"]
+            "_source": ["title"],
+            "size": 10
           }
         },
-        "idsGroups": {
+        "originalLanguageFilter": {
           "terms": {
-            "field": "id",
-            "include": ["movieId:19993", "movieId:19991", "movieId:19992"]
+            "field": "originalLanguage",
+            "include": ["en"]
           }
         }
       },
       "terms": {
-        "field": "originalLanguage",
-        "include": ["en"]
+        "field": "id",
+        "include": ["movieId:19993", "movieId:19991", "movieId:19992"]
       }
     },
     "102": {
       "aggs": {
         "aggs": {
           "top_hits": {
-            "_source": ["title"]
+            "_source": ["title"],
+            "size": 10
           }
         },
-        "idsGroups": {
+        "originalLanguageFilter": {
           "terms": {
-            "field": "id",
-            "include": ["movieId:19993", "movieId:19991", "movieId:19992"]
+            "field": "originalLanguage",
+            "include": ["en"]
           }
         }
       },
       "terms": {
-        "field": "originalLanguage",
-        "include": ["en"]
+        "field": "id",
+        "include": ["movieId:19993", "movieId:19991", "movieId:19992"]
       }
     },
     "103": {
       "aggs": {
         "aggs": {
           "top_hits": {
-            "_source": ["title"]
+            "_source": ["title"],
+            "size": 10
           }
         },
-        "idsGroups": {
+        "originalLanguageFilter": {
           "terms": {
-            "field": "id",
-            "include": ["movieId:19993", "movieId:19991", "movieId:19992"]
+            "field": "originalLanguage",
+            "include": ["en"]
           }
         }
       },
       "terms": {
-        "field": "originalLanguage",
-        "include": ["en"]
+        "field": "id",
+        "include": ["movieId:19993", "movieId:19991", "movieId:19992"]
       }
     },
     "104": {
       "aggs": {
         "aggs": {
           "top_hits": {
-            "_source": ["title"]
+            "_source": ["title"],
+            "size": 10
           }
         },
-        "idsGroups": {
+        "originalLanguageFilter": {
           "terms": {
-            "field": "id",
-            "include": ["movieId:19993", "movieId:19991", "movieId:19992"]
+            "field": "originalLanguage",
+            "include": ["en"]
           }
         }
       },
       "terms": {
-        "field": "originalLanguage",
-        "include": ["en"]
+        "field": "id",
+        "include": ["movieId:19993", "movieId:19991", "movieId:19992"]
       }
     },
     "105": {
       "aggs": {
         "aggs": {
           "top_hits": {
-            "_source": ["title"]
+            "_source": ["title"],
+            "size": 10
           }
         },
-        "idsGroups": {
+        "originalLanguageFilter": {
           "terms": {
-            "field": "id",
-            "include": ["movieId:19993", "movieId:19991", "movieId:19992"]
+            "field": "originalLanguage",
+            "include": ["sp"]
           }
         }
       },
       "terms": {
-        "field": "originalLanguage",
-        "include": ["sp"]
+        "field": "id",
+        "include": ["movieId:19993", "movieId:19991", "movieId:19992"]
       }
     },
     "106": {
       "aggs": {
         "aggs": {
           "top_hits": {
-            "_source": ["title"]
+            "_source": ["title"],
+            "size": 10
           }
         },
-        "idsGroups": {
+        "originalLanguageFilter": {
           "terms": {
-            "field": "id",
-            "include": ["movieId:19993", "movieId:19991", "movieId:19992"]
+            "field": "originalLanguage",
+            "include": ["en", "sp"]
           }
         }
       },
       "terms": {
-        "field": "originalLanguage",
-        "include": ["en", "sp"]
+        "field": "id",
+        "include": ["movieId:19993", "movieId:19991", "movieId:19992"]
       }
     }
   },
