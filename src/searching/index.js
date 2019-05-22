@@ -12,6 +12,12 @@ function findUserById(userId) {
   return user[userId];
 }
 
+function searchTermResponseParser(response) {
+  const { hits } = response.hits;
+  /* eslint-disable no-underscore-dangle */
+  return hits.map(val => val._source.title);
+}
+
 async function search(userId, searchTerm) {
   const user = findUserById(userId);
   const movieSearch = {
@@ -23,7 +29,7 @@ async function search(userId, searchTerm) {
     },
   };
 
-  return elastic.search(movieSearch);
+  return searchTermResponseParser(await elastic.search(movieSearch));
 }
 
 const userPreferencesQueryGenerator = () => {

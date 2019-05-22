@@ -1,0 +1,61 @@
+{
+    "took": 54,
+    "timed_out": false,
+    "_shards": {
+        "total": 5,
+        "successful": 5,
+        "skipped": 0,
+        "failed": 0
+    },
+    "hits": {
+        "total": 3,
+        "max_score": null,
+        "hits": [
+            {
+                "_index": "movies",
+                "_type": "_doc",
+                "_id": "movieId:19991::castId:242",
+                "_score": null,
+                "_source": {
+                    "id": "movieId:19991::castId:242",
+                    "movieId": 19991,
+                    "title": "Avatar",
+                    "name": "Sam Worthington"
+                },
+                "sort": [
+                    "Avatar"
+                ]
+            },
+            {
+                "_index": "movies",
+                "_type": "_doc",
+                "_id": "movieId:19992::castId:242",
+                "_score": null,
+                "_source": {
+                    "id": "movieId:19992::castId:242",
+                    "movieId": 19992,
+                    "title": "Bvatar",
+                    "name": "Sam Worthington"
+                },
+                "sort": [
+                    "Bvatar"
+                ]
+            },
+            {
+                "_index": "movies",
+                "_type": "_doc",
+                "_id": "movieId:19993::castId:242",
+                "_score": null,
+                "_source": {
+                    "id": "movieId:19993::castId:242",
+                    "movieId": 19993,
+                    "title": "Zvatar",
+                    "name": "Sam Worthington"
+                },
+                "sort": [
+                    "Zvatar"
+                ]
+            }
+        ]
+    }
+}

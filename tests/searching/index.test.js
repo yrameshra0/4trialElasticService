@@ -5,6 +5,7 @@ const userPreferencesActorsDirectorsQuery = require('./__snapshots__/userPrefere
 const originalLanguageQuery = require('./__snapshots__/originalLanguageQuery');
 const elasticOriginalLanguageResponse = require('./__snapshots__/elasticOriginalLanguageResponse');
 const userPreferencesResponse = require('./__snapshots__/userPreferedMovies');
+const elasticSearchTermsResponse = require('./__snapshots__/elasticSearchTermsResponse');
 
 jest.mock('../../src/elastic');
 
@@ -21,6 +22,8 @@ describe('Searching', () => {
   });
 
   test('user specified search term', async () => {
+    elastic.search.mockReturnValueOnce(Promise.resolve(elasticSearchTermsResponse));
+
     const userId = '101';
     const searchTerm = 'Tom Hanks';
     const preferences = {
@@ -29,9 +32,10 @@ describe('Searching', () => {
       langaugages: ['English'],
     };
 
-    await search(userId, searchTerm);
+    await expect(search(userId, searchTerm)).resolves.toMatchObject(['Avatar', 'Bvatar', 'Zvatar']);
 
-    expect(elastic.search).toBeCalledWith({ searchTerm, preferences });
+    expect(elastic.search.mock.calls.length).toBe(1);
+    expect(elastic.search.mock.calls[0][0]).toMatchObject({ searchTerm, preferences });
   });
 
   test('all users preferences search', async () => {
