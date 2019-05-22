@@ -1,0 +1,28 @@
+{
+  "body": {
+    "mappings": {
+      "_doc": {
+        "properties": {
+          "id": {
+            "type": "keyword"
+          },
+          "name": {
+            "fields": {
+              "raw": {
+                "type": "keyword"
+              }
+            },
+            "type": "text"
+          },
+          "originalLanguage": {
+            "type": "keyword"
+          },
+          "title": {
+            "type": "keyword"
+          }
+        }
+      }
+    }
+  },
+  "index": "movies"
+}
