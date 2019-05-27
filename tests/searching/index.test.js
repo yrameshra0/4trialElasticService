@@ -38,6 +38,13 @@ describe('Searching', () => {
     expect(elastic.search.mock.calls[0][0]).toMatchObject({ searchTerm, preferences });
   });
 
+  test('search term error case', async () => {
+    const elasticError = new Error('Search Failed');
+    elastic.search.mockReturnValueOnce(Promise.reject(elasticError));
+
+    await expect(search('101', 'Tom Hanks')).rejects.toThrowError(elasticError);
+  });
+
   test('all users preferences search', async () => {
     /* prettier-ignore */
     elastic.search
@@ -62,5 +69,12 @@ describe('Searching', () => {
     await expect(allUsersPreferencesSearch()).resolves.toMatchObject(userPreferencesResponse);
 
     expect(elastic.search).toBeCalledTimes(2);
+  });
+
+  test('all users preferences fails with error', async () => {
+    const elasticError = new Error('Search Failed');
+    elastic.search.mockReturnValueOnce(Promise.reject(elasticError));
+
+    await expect(allUsersPreferencesSearch()).rejects.toThrowError(elasticError);
   });
 });

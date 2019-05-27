@@ -1,3 +1,4 @@
+const logger = require('../logger');
 const userPreferences = require('./user_preferences');
 const elastic = require('../elastic');
 const MAX_MOVIES = 3;
@@ -30,7 +31,12 @@ async function search(userId, searchTerm) {
     },
   };
 
-  return searchTermResponseParser(await elastic.search(movieSearch));
+  try {
+    return searchTermResponseParser(await elastic.search(movieSearch));
+  } catch (err) {
+    logger.error(err);
+    throw err;
+  }
 }
 
 const userPreferencesQueryGenerator = () => {
@@ -172,11 +178,16 @@ function userPreferenceParser(response) {
 async function allUsersPreferencesSearch() {
   if (preferenceSearchResults) return preferenceSearchResults;
 
-  const allPreferencesFilter = await elastic.search(userPreferencesQueryGenerator());
-  const filterByOriginalLanguage = await elastic.search(originalLanguageQueryGenerator(allPreferencesFilter));
-  preferenceSearchResults = userPreferenceParser(filterByOriginalLanguage);
+  try {
+    const allPreferencesFilter = await elastic.search(userPreferencesQueryGenerator());
+    const filterByOriginalLanguage = await elastic.search(originalLanguageQueryGenerator(allPreferencesFilter));
+    preferenceSearchResults = userPreferenceParser(filterByOriginalLanguage);
 
-  return preferenceSearchResults;
+    return preferenceSearchResults;
+  } catch (err) {
+    logger.error(err);
+    throw err;
+  }
 }
 
 function clearPreferenceSearchResults() {
