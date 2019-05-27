@@ -109,6 +109,37 @@
               ]
             }
           }
+        },
+        {
+          "key": "movieId:19994",
+          "doc_count": 1,
+          "originalLanguageFilter": {
+            "doc_count_error_upper_bound": 0,
+            "sum_other_doc_count": 0,
+            "buckets": [
+              {
+                "key": "en",
+                "doc_count": 1
+              }
+            ]
+          },
+          "aggs": {
+            "hits": {
+              "total": 1,
+              "max_score": 1,
+              "hits": [
+                {
+                  "_index": "movies",
+                  "_type": "_doc",
+                  "_id": "movieId:19993",
+                  "_score": 1,
+                  "_source": {
+                    "title": "Zzvatar"
+                  }
+                }
+              ]
+            }
+          }
         }
       ]
     },

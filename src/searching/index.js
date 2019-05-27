@@ -1,5 +1,6 @@
 const userPreferences = require('./user_preferences');
 const elastic = require('../elastic');
+const MAX_MOVIES = 3;
 
 let preferenceSearchResults;
 
@@ -159,7 +160,8 @@ function userPreferenceParser(response) {
         /* eslint-disable no-underscore-dangle */
         const titles = hits.map(movie => movie._source.title);
         return [...acc, ...titles];
-      }, []);
+      }, [])
+      .splice(0, MAX_MOVIES);
     return {
       user,
       movies,
