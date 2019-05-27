@@ -36,11 +36,3 @@ async function uploadToElastic(full = false) {
 module.exports = {
   uploadToElastic,
 };
-
-setImmediate(async () => {
-  try {
-    await uploadToElastic();
-  } catch (error) {
-    console.error(error);
-  }
-});
