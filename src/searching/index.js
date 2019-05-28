@@ -1,6 +1,7 @@
 const logger = require('../logger');
 const userPreferences = require('./user_preferences');
 const elastic = require('../elastic');
+
 const MAX_MOVIES = 3;
 
 let preferenceSearchResults;
@@ -198,4 +199,5 @@ module.exports = {
   search,
   allUsersPreferencesSearch,
   clearPreferenceSearchResults,
+  findUserById,
 };
