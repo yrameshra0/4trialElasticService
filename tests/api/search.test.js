@@ -15,6 +15,10 @@ describe('Search Api', () => {
     jest.clearAllMocks();
   });
 
+  afterAll(async () => {
+    await server.stop();
+  });
+
   test('user id validations - Not in Range', async () => {
     searching.findUserById.mockImplementation(() => {
       throw new Error('User not found');
