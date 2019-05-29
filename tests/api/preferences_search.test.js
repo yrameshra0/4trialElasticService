@@ -3,7 +3,7 @@ const preferencesSearchApi = require('../../src/api/preferences_search');
 const searching = require('../../src/searching');
 
 jest.mock('../../src/searching');
-describe('Search Api', () => {
+describe('Preferences Search Api', () => {
   let server;
 
   beforeAll(() => {
