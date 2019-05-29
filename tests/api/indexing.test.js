@@ -8,6 +8,7 @@ describe('Indexing Api', () => {
 
   beforeAll(() => {
     server = new hapi.Server();
+    delete indexingApi.options.auth;
     server.route(indexingApi);
   });
 

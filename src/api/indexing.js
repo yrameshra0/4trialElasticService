@@ -7,5 +7,7 @@ module.exports = {
     await uploadToElastic();
     return { uploadToElastic: 'OK' };
   },
-  options: {},
+  options: {
+    auth: 'simple',
+  },
 };

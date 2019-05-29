@@ -7,6 +7,13 @@ const properties = {
       log: 'debug',
     },
     index: 'movies',
+    users: {
+      admin: {
+        username: 'admin',
+        password: '$2b$10$bXGXTAdyWrk3vqdeMs4WOuXLDmw.LBk2nu.T3IahpGQjBl5QP8vZa', // 'secret'
+        name: 'admin',
+      },
+    },
   },
 };
 
