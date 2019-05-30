@@ -36,7 +36,7 @@ describe('Elastic client and actions', () => {
       langaugages: ['English'],
     };
 
-    await client.search({ searchTerm: 'Sam', preferences });
+    await client.searchWithTerm({ searchTerm: 'Sam', preferences });
 
     expect(searchSpy).toHaveBeenCalledTimes(1);
     expect(searchSpy).toBeCalledWith(sampleSearchBody);

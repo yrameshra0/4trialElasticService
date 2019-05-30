@@ -22,7 +22,7 @@ describe('Searching', () => {
   });
 
   test('user specified search term', async () => {
-    elastic.search.mockReturnValueOnce(Promise.resolve(elasticSearchTermsResponse));
+    elastic.searchWithTerm.mockReturnValueOnce(Promise.resolve(elasticSearchTermsResponse));
 
     const userId = '101';
     const searchTerm = 'Tom Hanks';
@@ -34,46 +34,46 @@ describe('Searching', () => {
 
     await expect(search(userId, searchTerm)).resolves.toMatchObject(['Avatar', 'Bvatar', 'Zvatar']);
 
-    expect(elastic.search.mock.calls.length).toBe(1);
-    expect(elastic.search.mock.calls[0][0]).toMatchObject({ searchTerm, preferences });
+    expect(elastic.searchWithTerm.mock.calls.length).toBe(1);
+    expect(elastic.searchWithTerm.mock.calls[0][0]).toMatchObject({ searchTerm, preferences });
   });
 
   test('search term error case', async () => {
     const elasticError = new Error('Search Failed');
-    elastic.search.mockReturnValueOnce(Promise.reject(elasticError));
+    elastic.searchWithTerm.mockReturnValueOnce(Promise.reject(elasticError));
 
     await expect(search('101', 'Tom Hanks')).rejects.toThrowError(elasticError);
   });
 
   test('all users preferences search', async () => {
     /* prettier-ignore */
-    elastic.search
+    elastic.searchWithQuery
     .mockReturnValueOnce(Promise.resolve(elasticUserPreferencesResponse))
     .mockReturnValueOnce(Promise.resolve(elasticOriginalLanguageResponse));
 
     const results = await allUsersPreferencesSearch();
 
-    expect(elastic.search.mock.calls.length).toBe(2);
-    expect(elastic.search.mock.calls[0][0]).toMatchObject(userPreferencesActorsDirectorsQuery);
-    expect(elastic.search.mock.calls[1][0]).toMatchObject(originalLanguageQuery);
+    expect(elastic.searchWithQuery.mock.calls.length).toBe(2);
+    expect(elastic.searchWithQuery.mock.calls[0][0]).toMatchObject(userPreferencesActorsDirectorsQuery);
+    expect(elastic.searchWithQuery.mock.calls[1][0]).toMatchObject(originalLanguageQuery);
     expect(results).toMatchObject(userPreferencesResponse);
   });
 
   test('all users preferences cached', async () => {
     /* prettier-ignore */
-    elastic.search
+    elastic.searchWithQuery
       .mockReturnValueOnce(Promise.resolve(elasticUserPreferencesResponse))
       .mockReturnValueOnce(Promise.resolve(elasticOriginalLanguageResponse));
 
     await expect(allUsersPreferencesSearch()).resolves.toMatchObject(userPreferencesResponse);
     await expect(allUsersPreferencesSearch()).resolves.toMatchObject(userPreferencesResponse);
 
-    expect(elastic.search).toBeCalledTimes(2);
+    expect(elastic.searchWithQuery).toBeCalledTimes(2);
   });
 
   test('all users preferences fails with error', async () => {
     const elasticError = new Error('Search Failed');
-    elastic.search.mockReturnValueOnce(Promise.reject(elasticError));
+    elastic.searchWithQuery.mockReturnValueOnce(Promise.reject(elasticError));
 
     await expect(allUsersPreferencesSearch()).rejects.toThrowError(elasticError);
   });

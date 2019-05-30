@@ -73,10 +73,18 @@ function searchBody(searchTerm, preferences) {
     sort: [{ name: 'asc' }],
   };
 }
-async function search({ searchTerm, preferences }) {
-  logger.info('Forwarding search to elastic:', { searchTerm, preferences });
+
+async function searchWithTerm({ searchTerm, preferences }) {
+  logger.info('Forwarding search for term to elastic:', { searchTerm, preferences });
   const type = '_doc';
   const body = searchBody(searchTerm, preferences);
+
+  return client.search({ index, type, body });
+}
+
+async function searchWithQuery(body) {
+  logger.info('Forwarding search for query to elastic:', body);
+  const type = '_doc';
 
   return client.search({ index, type, body });
 }
@@ -84,5 +92,6 @@ async function search({ searchTerm, preferences }) {
 module.exports = {
   bulkUpload,
   resetIndex,
-  search,
+  searchWithTerm,
+  searchWithQuery,
 };

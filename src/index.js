@@ -24,15 +24,26 @@ process.on('unhandledRejection', err => {
 });
 
 async function init() {
-  await server.register([loggerPlugin, routePlugin, goodPlugin, authPlugin]);
+  logger.info('Server Initialized STARTED');
+  // try {
+  await server.register([routePlugin, goodPlugin, authPlugin, loggerPlugin]);
+  // } catch (err) {
+  // logger.error(err);
+  // }
 
-  logger.info('Server Initialized');
+  logger.info('Server Initialized FINISHED');
   await server.initialize();
   return server;
+}
+
+async function initAndStart() {
+  await init();
+  await start();
 }
 
 module.exports = {
   init,
   start,
   stop,
+  initAndStart,
 };

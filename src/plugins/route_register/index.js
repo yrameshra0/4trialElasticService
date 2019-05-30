@@ -2,6 +2,7 @@ const fs = require('fs');
 const util = require('util');
 
 const isTest = () => (process.env.NODE_ENV || 'test').toLowerCase() === 'test';
+const logger = require('../../logger');
 
 async function recursivePathBuilder(srcDir, passOn = []) {
   let files = await util.promisify(fs.readdir)(srcDir);
@@ -21,9 +22,11 @@ async function apisToLoad() {
   const filesNotUnderTestOrMock = file => !filesUnderTestsOrMock(file);
 
   if (isTest()) {
+    logger.info(`APIs REGISTERED -- ${JSON.stringify(apiListings.filter(filesUnderTestsOrMock))}`);
     return apiListings.filter(filesUnderTestsOrMock);
   }
 
+  logger.info(`APIs REGISTERED -- ${JSON.stringify(apiListings.filter(filesNotUnderTestOrMock))}`);
   return apiListings.filter(filesNotUnderTestOrMock);
 }
 async function initRoutes() {

@@ -3,7 +3,7 @@ const GoodConsole = require('good-console');
 
 const options = {
   ops: {
-    interval: 1000,
+    interval: 10000,
   },
   reporters: {
     myConsoleReporter: [new GoodConsole({ format: 'YYYY-MM-DDTHH:mm:ss.SSS' }), 'stdout'],

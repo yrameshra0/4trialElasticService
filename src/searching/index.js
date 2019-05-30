@@ -33,7 +33,7 @@ async function search(userId, searchTerm) {
   };
 
   try {
-    return searchTermResponseParser(await elastic.search(movieSearch));
+    return searchTermResponseParser(await elastic.searchWithTerm(movieSearch));
   } catch (err) {
     logger.error(err);
     throw err;
@@ -91,7 +91,8 @@ function originalLanguageQueryGenerator(response) {
   const userAggs = Object.keys(aggregations);
 
   function movieIdsForUser(userId) {
-    const { hits } = aggregations[userId].buckets[0].allResluts.hits;
+    const hits = aggregations[userId].buckets.reduce((acc, bucket) => bucket.allResluts.hits.hits, []);
+    logger.info('HITTS', hits);
     /* eslint-disable no-underscore-dangle */
     return hits.map(val => val._source.movieId).map(val => `movieId:${val}`);
   }
@@ -180,8 +181,9 @@ async function allUsersPreferencesSearch() {
   if (preferenceSearchResults) return preferenceSearchResults;
 
   try {
-    const allPreferencesFilter = await elastic.search(userPreferencesQueryGenerator());
-    const filterByOriginalLanguage = await elastic.search(originalLanguageQueryGenerator(allPreferencesFilter));
+    const allPreferencesFilter = await elastic.searchWithQuery(userPreferencesQueryGenerator());
+    logger.info('allPreferencesFilter results', allPreferencesFilter);
+    const filterByOriginalLanguage = await elastic.searchWithQuery(originalLanguageQueryGenerator(allPreferencesFilter));
     preferenceSearchResults = userPreferenceParser(filterByOriginalLanguage);
 
     return preferenceSearchResults;
