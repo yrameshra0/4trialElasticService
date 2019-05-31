@@ -26,7 +26,7 @@ process.on('unhandledRejection', err => {
 async function init() {
   logger.info('Server Initialized STARTED');
   // try {
-  await server.register([routePlugin, goodPlugin, authPlugin, loggerPlugin]);
+  await server.register([authPlugin, goodPlugin, loggerPlugin, routePlugin]);
   // } catch (err) {
   // logger.error(err);
   // }
