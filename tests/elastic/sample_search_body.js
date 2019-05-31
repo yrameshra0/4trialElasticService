@@ -45,7 +45,7 @@ module.exports = {
     },
     sort: [
       {
-        name: 'asc',
+        title: 'asc',
       },
     ],
   },

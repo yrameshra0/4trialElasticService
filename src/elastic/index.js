@@ -70,7 +70,7 @@ function searchBody(searchTerm, preferences) {
         should: [...matchBlockGenerator([...preferences.actors, ...preferences.directors]), ...matchBlockGenerator(preferences.langaugages, 'originalLanguage')],
       },
     },
-    sort: [{ name: 'asc' }],
+    sort: [{ title: 'asc' }],
   };
 }
 
