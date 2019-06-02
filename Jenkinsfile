@@ -5,15 +5,13 @@ pipeline {
     }
     stages {
         stage('Build with unit testing') {
-        agent { 
-                docker { image 'node:12-alpine' }
-            }
+        agent { dockerfile true }
             steps {
                 sh """
                 node --version
+                npm run install
                 npm run test
                 npm run coverate
-                docker build -t ${env.SWARM_SERVICE_NAME}:${env.GIT_COMMIT} .
                 """
             }
         }  

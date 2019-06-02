@@ -31,7 +31,6 @@ async function apisToLoad() {
 }
 async function initRoutes() {
   const apis = await apisToLoad();
-  // console.log(JSON.stringify({ apis }));
   /* eslint-disable-next-line */
   const loadedFiles = await Promise.all(apis.map(file => require(file)));
   return loadedFiles;
