@@ -4,11 +4,11 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "jest",
-    "coverage": "jest --collectCoverage",
+    "test": "npx jest",
+    "coverage": "npx jest --collectCoverage",
     "code-format": "npx prettier --write ./src/**/*.js && npx prettier --write ./tests/**/*.js && npx eslint --fix ./src/**/*.js && npx eslint --fix ./tests/**/*.js",
     "start:dev":"NODE_ENV=local npm run start",
-    "start:prod": "NODE_ENV=production npm run start",
+    "start:prod": "NODE_ENV=production` npm run start",
     "start": "node -e 'require(\"./src\").initAndStart()'"
   },
   "author": "",
