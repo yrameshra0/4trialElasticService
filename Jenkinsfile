@@ -9,9 +9,8 @@ pipeline {
             steps {
                 sh """
                 node --version
-                npm run install
                 npm run test
-                npm run coverate
+                npm run coverage
                 """
             }
         }  
