@@ -17,8 +17,13 @@ pipeline {
 
         stage('Update TEST swarm') {
             steps {
-                sh """
-                echo "PENDING STEPS"
+                 sh """
+                docker service update \
+                --replicas 1 \
+                --update-delay 10s \
+                --env-add NODE_ENV=test \
+                --image ${env.SWARM_SERVICE_NAME}:${env.GIT_COMMIT} \
+                test_${env.SWARM_SERVICE_NAME}
                 """
             }
         }    
@@ -26,7 +31,12 @@ pipeline {
         stage('Update PROD swarm') {
             steps {
                 sh """
-                echo "PENDING STEPS"
+                docker service update \
+                --replicas 1 \
+                --update-delay 10s \
+                --env-add NODE_ENV=production \
+                --image ${env.SWARM_SERVICE_NAME}:${env.GIT_COMMIT} \
+                test_${env.SWARM_SERVICE_NAME}
                 """
             }
         }    
