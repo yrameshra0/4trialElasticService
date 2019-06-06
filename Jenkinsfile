@@ -4,14 +4,23 @@ pipeline {
         SWARM_SERVICE_NAME = 'app_movie_search'
     }
     stages {
-        stage('Build with unit testing') {
+        stage('Running Tests') {
         agent { dockerfile true }
             steps {
                 sh """
-                echo "CODECOV_TOKEN=${params.CODECOV_TOKEN}"
+                export CODECOV_TOKEN="${params.CODECOV_TOKEN}"
+                export GIT_COMMIT="$env.GIT_COMMIT"
                 node --version
                 npm run coverage
+                curl -s https://codecov.io/bash>>./codecov.sh
+                sh codecov.sh
                 """
+            }
+        }  
+
+        stage('Building Docker Image') {
+            steps {
+               sh """docker build -t ${env.SWARM_SERVICE_NAME}:${env.GIT_COMMIT} ."""
             }
         }  
 
