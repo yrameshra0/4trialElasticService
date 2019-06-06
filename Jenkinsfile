@@ -8,8 +8,8 @@ pipeline {
         agent { dockerfile true }
             steps {
                 sh """
+                echo "CODECOV_TOKEN=${params.CODECOV_TOKEN}"
                 node --version
-                npm run test
                 npm run coverage
                 """
             }

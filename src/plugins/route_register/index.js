@@ -1,7 +1,7 @@
 const fs = require('fs');
 const util = require('util');
 
-const isTest = () => (process.env.NODE_ENV || 'test').toLowerCase() === 'test';
+const isLocalTest = () => (process.env.NODE_ENV || 'local').toLowerCase() === 'local';
 const logger = require('../../logger');
 
 async function recursivePathBuilder(srcDir, passOn = []) {
@@ -21,12 +21,10 @@ async function apisToLoad() {
   const filesUnderTestsOrMock = file => file.match(/(_{2}).+(_{2})/);
   const filesNotUnderTestOrMock = file => !filesUnderTestsOrMock(file);
 
-  if (isTest()) {
-    logger.info(`APIs REGISTERED -- ${JSON.stringify(apiListings.filter(filesUnderTestsOrMock))}`);
+  if (isLocalTest()) {
     return apiListings.filter(filesUnderTestsOrMock);
   }
 
-  logger.info(`APIs REGISTERED -- ${JSON.stringify(apiListings.filter(filesNotUnderTestOrMock))}`);
   return apiListings.filter(filesNotUnderTestOrMock);
 }
 async function initRoutes() {
