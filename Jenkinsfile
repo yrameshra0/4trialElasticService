@@ -49,7 +49,7 @@ pipeline {
                 --update-delay 10s \
                 --env-add NODE_ENV=production \
                 --image ${env.SWARM_SERVICE_NAME}:${env.GIT_COMMIT} \
-                test_${env.SWARM_SERVICE_NAME}
+                prod_${env.SWARM_SERVICE_NAME}
                 """
             }
         }    
