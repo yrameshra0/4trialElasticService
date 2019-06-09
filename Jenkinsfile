@@ -10,6 +10,9 @@ pipeline {
                 sh """
                 export CODECOV_TOKEN="${params.CODECOV_TOKEN}"
                 export GIT_COMMIT="$env.GIT_COMMIT"
+                export JENKINS_URL="$env.JENKINS_URL"
+                export GIT_BRANCH="$env.GIT_BRANCH"
+                export CHANGE_ID="$env.CHANGE_ID"
                 node --version
                 npm run coverage
                 curl -s https://codecov.io/bash>>./codecov.sh
