@@ -8,6 +8,7 @@ pipeline {
         agent { dockerfile true }
             steps {
                 sh """
+                apk add curl bash
                 export CODECOV_TOKEN="${params.CODECOV_TOKEN}"
                 export GIT_COMMIT="$env.GIT_COMMIT"
                 export JENKINS_URL="$env.JENKINS_URL"
