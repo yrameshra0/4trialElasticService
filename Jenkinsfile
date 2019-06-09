@@ -36,6 +36,7 @@ pipeline {
                 --update-delay 10s \
                 --env-add NODE_ENV=test \
                 --image ${env.SWARM_SERVICE_NAME}:${env.GIT_COMMIT} \
+                --publish published=80,target=3000 \
                 test_${env.SWARM_SERVICE_NAME}
                 """
             }
@@ -49,6 +50,7 @@ pipeline {
                 --update-delay 10s \
                 --env-add NODE_ENV=production \
                 --image ${env.SWARM_SERVICE_NAME}:${env.GIT_COMMIT} \
+                --publish published=80,target=3000 \
                 prod_${env.SWARM_SERVICE_NAME}
                 """
             }
