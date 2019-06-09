@@ -16,8 +16,7 @@ pipeline {
                 export CHANGE_ID="$env.CHANGE_ID"
                 node --version
                 npm run coverage
-                curl -s https://codecov.io/bash>>./codecov.sh
-                sh codecov.sh
+                bash <(curl -s https://codecov.io/bash)
                 """
             }
         }  
