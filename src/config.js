@@ -17,7 +17,7 @@ const properties = {
   },
   test: {
     elasticConfig: {
-      host: 'elastic',
+      host: 'elastic:9200',
       log: 'debug',
     },
     index: 'movies',
@@ -31,7 +31,7 @@ const properties = {
   },
   production: {
     elasticConfig: {
-      host: 'elastic',
+      host: 'elastic:9200',
       log: 'debug',
     },
     index: 'movies',
