@@ -1,4 +1,4 @@
-const Bcrypt = require('bcrypt');
+const Bcrypt = require('bcryptjs');
 const basicAuth = require('@hapi/basic');
 const { users } = require('../../config');
 
