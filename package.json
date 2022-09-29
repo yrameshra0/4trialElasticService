@@ -14,8 +14,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@hapi/basic": "^5.1.0",
-    "@hapi/podium": "^3.4.0",
+    "@hapi/basic": "^5.1.1",
+    "@hapi/podium": "^3.4.3",
     "bcryptjs": "^2.4.3",
     "boom": "^7.3.0",
     "cls-hooked": "^4.2.2",
